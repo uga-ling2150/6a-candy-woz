@@ -1,23 +1,8 @@
 """
-FORM: Home  (set as the app's startup form)
-
-COMPONENTS TO ADD (drag from Toolbox onto a ColumnPanel with role "wrap"):
-  - Label            name: title_label        text: "Georgia Candy — Wizard of Oz Lab"
-  - Label            name: subtitle_label      text: short friendly intro (see below)
-  - Label            name: name_label          text: "Your name"
-  - TextBox          name: name_box            placeholder: "e.g. Sam"
-  - Label            name: role_label          text: "I am the..."
-  - RadioButton      name: role_wizard         text: "Wizard (candy store worker)"  group_name: "role"
-  - RadioButton      name: role_human          text: "Human (customer)"             group_name: "role"
-  - RadioButton      name: role_instructor     text: "Instructor"                   group_name: "role"
-  - TextBox          name: instructor_code_box placeholder: "Instructor passcode"  visible: False
-  - Label            name: error_label         text: ""   foreground: var(--uga-red)  visible: False
-  - Button           name: continue_button     text: "Continue"  role: "btn-uga"
-
-Suggested subtitle text (plain language, no jargon):
-  "You'll be paired up to roleplay a conversation at a candy store. One of you runs the
-   counter, one of you is the customer. It only takes a few minutes, and there's no wrong way
-   to talk — just talk normally."
+FORM: Home — code-behind
+Pair with Home.html. Only the components named there (name_box, role_wizard,
+role_human, role_instructor, instructor_code_box, error_label, continue_button)
+are touched by Python — everything else in Home.html is static markup.
 """
 from ._anvil_designer import HomeTemplate
 from anvil import *

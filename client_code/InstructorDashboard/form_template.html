@@ -1,4 +1,78 @@
-<center style="font-style:italic; color:#888; margin: 3em;">
-  (Edit this HTML in the HTML pane)
-</center>
-<anvil-dropzone name="default"></anvil-dropzone>
+<div class="app-wrapper">
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Instructor <span>Dashboard</span></h2>
+      <p>Aggregate every annotated turn from the class, train a bag-of-words
+classifier, and see how it does on a fixed set of test sentences.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-bottom:16px;">
+    <!-- SLOT: train_button (Button, text "Train & Test Classifier", role "btn-uga") -->
+    <!-- SLOT: status_label (Label, visible: False, shown while training / on error) -->
+  </div>
+
+  <!-- SLOT: results_panel (ColumnPanel, visible: False; contains everything below) -->
+
+  <div style="text-align:center; margin-bottom:16px;">
+    <!-- SLOT: accuracy_label (Label, role "status-success", visible: False) -->
+  </div>
+
+  <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
+
+    <div class="stage-body" style="flex:1; min-width:320px;">
+      <div class="stage-title">Training data (from your class)</div>
+      <!-- SLOT: train_size_label (Label) -->
+
+      <div class="nlu-row" style="margin-top:10px; margin-bottom:14px;">
+        <!-- SLOT: train_label_counts_repeater (RepeatingPanel,
+        item template: LabelCountChipTemplate) -->
+      </div>
+
+      <div class="table-scroll">
+        SpeakerTurn textLabeled as
+
+          <!-- SLOT: train_examples_repeater (RepeatingPanel,
+          item template: TrainExampleTemplate) -->
+
+      </div>
+    </div>
+
+    <div class="stage-body" style="flex:1; min-width:320px;">
+      <div class="stage-title">Test sentences (instructor-authored)</div>
+      <!-- SLOT: test_results_repeater (RepeatingPanel,
+      item template: TestResultRowTemplate) -->
+    </div>
+
+  </div>
+
+  <!-- END results_panel -->
+
+  <div class="discussion-box" style="margin-top:24px;">
+    <h4>💬 Class discussion</h4>
+    <p>
+      Look at the test sentences the model got wrong. What do they have in common?
+      Notice whether short sentences with few "candy words" (like confirmations or
+      corrections) are harder to classify than ones that mention specific items.
+      This model only looks at which words appear, not their order or context —
+      what does that suggest about its limits, and what would you need to give it
+      to fix those specific mistakes?
+    </p>
+  </div>
+
+  <div class="glossary-box">
+    <details>
+      <summary>How does this actually work?</summary>
+      <p style="margin-top:10px;">
+        This uses a simplified "bag-of-words" Naive Bayes classifier: it counts
+        how often each word appears with each intent label in the training data,
+        then for a new sentence, multiplies together how likely each of its words
+        is under each label (with a small correction called Laplace smoothing so
+        unseen words don't break the math), and picks the label with the highest
+        resulting probability. It has no idea about word order, grammar, or
+        meaning beyond word counts — which is exactly why certain sentences trip
+        it up.
+      </p>
+    </details>
+  </div>
+</div>

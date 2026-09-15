@@ -1,31 +1,9 @@
 """
-FORM: ChatSession
-Opened with: open_form('ChatSession', room_code=code, role='wizard'|'human', student_name=name)
-
-COMPONENTS TO ADD:
-  - Label             name: dialogue_label     text: "Dialogue 1"
-  - HtmlPanel/Label    name: timer_label        text: "10:00"
-        Accessibility: wrap this label's underlying HTML with role="status" and
-        aria-live="polite" (in Anvil: use a plain HTML template component instead of a
-        Label for this one, e.g. <span role="status" aria-live="polite">{{timer_text}}</span>,
-        so screen readers hear each update). A Label alone will not announce changes.
-  - Button             name: extend_button      text: "+2 minutes"  role: "btn-uga-outline"
-  - ColumnPanel        name: catalogue_panel     visible: only when role == 'wizard'
-      - Label           name: catalogue_title     text: "Catalogue reference"
-      - RepeatingPanel   name: catalogue_repeater  (same item template as WizardLobby)
-  - RepeatingPanel      name: transcript_repeater  item_template: a bubble row using the
-        .nlg-bubble CSS class, right-aligned + red border for 'wizard', left-aligned +
-        default border for 'human'. Bind item['speaker'] to choose alignment/class.
-  - TextBox             name: message_box        placeholder: "Type your message..."
-  - Button              name: send_button        text: "Send"  role: "btn-uga"
-  - Button              name: new_dialogue_button text: "End this dialogue, start a new one"
-                         role: "btn-uga-outline"
-  - Label               name: time_up_label       text: "" visible: False  (see below)
-  - Button              name: go_to_annotation_button text: "Go to annotation" visible: False
-  - Timer               name: poll_timer          interval: 2
-
-Suggested time_up_label text once the clock hits zero:
-  "Time's up! Head over to annotation to label the turns from your dialogues."
+FORM: ChatSession — code-behind
+Pair with ChatSession.html. Touches: dialogue_label, timer_label, extend_button,
+catalogue_panel, catalogue_repeater, transcript_repeater, message_box,
+send_button, new_dialogue_button, time_up_panel, time_up_label,
+go_to_annotation_button, poll_timer.
 """
 from ._anvil_designer import ChatSessionTemplate
 from anvil import *
@@ -45,9 +23,7 @@ class ChatSession(ChatSessionTemplate):
     if role == 'wizard':
       self.catalogue_repeater.items = anvil.server.call('get_catalogue')
 
-    self.go_to_annotation_button.visible = False
-    self.time_up_label.visible = False
-
+    self.time_up_panel.visible = False
     self.message_box.set_event_handler('pressed_enter', self.send_button_click)
 
     self.poll_timer.interval = 2
@@ -65,7 +41,7 @@ class ChatSession(ChatSessionTemplate):
     if seconds_left is not None:
       self.timer_label.text = self._format_seconds(seconds_left)
       if seconds_left <= 60 and not self.time_up:
-        self.timer_label.role = 'text-primary'  # visual warning, color is not the only cue
+        self.timer_label.role = 'text-primary'  # visual warning, not the only cue
       if seconds_left <= 0 and not self.time_up:
         self._handle_time_up()
 
@@ -79,8 +55,7 @@ class ChatSession(ChatSessionTemplate):
     self.message_box.enabled = False
     self.send_button.enabled = False
     self.new_dialogue_button.enabled = False
-    self.time_up_label.visible = True
-    self.go_to_annotation_button.visible = True
+    self.time_up_panel.visible = True
     self.poll_timer.interval = 0
 
   def poll_timer_tick(self, **event_args):

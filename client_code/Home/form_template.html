@@ -1,1 +1,53 @@
-<anvil-form container="ColumnPanel"></anvil-form>
+<!--
+FORM: Home — Custom HTML
+
+Paste this into the Form's custom HTML (Anvil → open Home → Properties → enable
+"Custom HTML" / "Edit HTML" — the exact toggle name has varied across Anvil
+versions, check Anvil's current "Custom HTML Forms" doc if you don't see it).
+
+Everywhere you see <!-- SLOT: name --> is a spot where you drop a real Anvil
+component (from the Toolbox) at that position, then name it exactly as shown so
+it matches Home.py. Anvil's current docs will tell you the exact markup/attribute
+it wants at each drop point (this has changed between Anvil versions) — treat the
+comments below as "put component X here", not literal HTML you can leave as-is.
+
+Everything else (headings, paragraphs, layout divs) is plain HTML — no component
+needed, so no Python touches it.
+--&gt;
+<div class="app-wrapper">
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Georgia Candy <span>WoZ Lab</span></h2>
+      <p>
+        You'll be paired up to roleplay a conversation at a candy store. One of you
+        runs the counter, one of you is the customer. It only takes a few minutes,
+        and there's no wrong way to talk — just talk normally.
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <label for="name-field" class="label-sm">Your name</label>
+    <!-- SLOT: name_box  (TextBox, placeholder "e.g. Sam") -->
+    <div id="name-field"><!-- SLOT: name_box --></div>
+
+    <div style="margin-top:18px;">
+      <label class="label-sm">I am the...</label>
+      <div class="nlu-row" style="margin-top:8px;">
+        <!-- SLOT: role_wizard      (RadioButton, group "role", text "Wizard (candy store worker)") -->
+        <!-- SLOT: role_human       (RadioButton, group "role", text "Human (customer)") -->
+        <!-- SLOT: role_instructor  (RadioButton, group "role", text "Instructor") -->
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <!-- SLOT: instructor_code_box (TextBox, placeholder "Instructor passcode", visible: False by default) -->
+    </div>
+
+    <!-- SLOT: error_label (Label, foreground var(--uga-red), visible: False) -->
+
+    <div style="margin-top:20px;">
+      <!-- SLOT: continue_button (Button, text "Continue", role "btn-uga") -->
+    </div>
+  </div>
+</div>

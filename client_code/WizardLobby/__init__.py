@@ -1,24 +1,6 @@
 """
-FORM: WizardLobby
-Opened with: open_form('WizardLobby', student_name=name)
-
-COMPONENTS TO ADD:
-  - Label            name: title_label       text: "You're running the counter today"
-  - Label            name: instructions_label text: plain instructions (see below)
-  - Label            name: code_label         text: ""   font_size: 32, bold, role: "machine-intent-badge"
-  - Label            name: waiting_label      text: "Waiting for your customer to join..."
-  - Label            name: catalogue_title    text: "Your catalogue (customers can't see this)"
-  - RepeatingPanel    name: catalogue_repeater  item_template: a simple ColumnPanel row
-        showing item_name, category, price, flavor_notes, and "Out of stock" badge if
-        in_stock is False. (Bind these via the RepeatingPanel's item template form,
-        e.g. a small "CatalogueItemTemplate" form with labels bound to
-        self.item['item_name'] etc.)
-  - Timer             name: poll_timer         interval: 2  (seconds)
-
-Suggested instructions text:
-  "Share this code with your partner out loud or in the class chat. Once they join, you'll
-   have 10 minutes together to run through a few quick orders. You can see the full candy
-   catalogue below — your customer can't, so they'll have to ask you what's available."
+FORM: WizardLobby — code-behind
+Pair with WizardLobby.html. Touches only code_label, catalogue_repeater, poll_timer.
 """
 from ._anvil_designer import WizardLobbyTemplate
 from anvil import *

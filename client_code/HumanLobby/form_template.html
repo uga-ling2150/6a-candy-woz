@@ -1,1 +1,23 @@
-<anvil-form layout="Minimal_Theme_2.Layouts.BaseLayout"></anvil-form>
+<div class="app-wrapper">
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Join your <span>partner's store</span></h2>
+      <p>
+        Your partner is running a candy store counter and has a room code for you.
+        Type it in below to join — you'll be playing the customer, so just imagine
+        you're stopping by to pick up some candy.
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <label for="code-field" class="label-sm">Room code</label>
+    <div id="code-field"><!-- SLOT: code_box (TextBox, placeholder "CANDY-XXXX") --></div>
+
+    <!-- SLOT: error_label (Label, foreground var(--uga-red), visible: False) -->
+
+    <div style="margin-top:20px;">
+      <!-- SLOT: join_button (Button, text "Join", role "btn-uga") -->
+    </div>
+  </div>
+</div>

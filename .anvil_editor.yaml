@@ -1,5 +1,6 @@
 unique_ids:
   assets:
+    custom.css: '178950255885461008135977.31303'
     theme.css: C26SOLFAIAAUZWN6SGCUPGHZFNR23VMG
   forms:
     AnnotationForm: WKKJZVJ7X7YT34GTF5Z2VWE2J32LBZAM
@@ -13,4 +14,6 @@ unique_ids:
     Layouts: X5N7ZWWFM3PEN2AHUWLGW7P7MSQ6XM7U
   scripts: {}
   server_modules:
-    ServerModule1: '1789479459997160960112956.63138'
+    server_annotation: '1789479459997160960112956.63138'
+    server_classifier: '1789502508031170379133136.3126'
+    server_package: '1789502520773901531507892.5627'

@@ -1,9 +1,24 @@
-<anvil-form layout="Minimal_Theme_2.Layouts.BaseLayout">
-  <anvil-block slot="actions"></anvil-block>
-  <anvil-block slot="content">
-    <anvil-component type="ColumnPanel" name="column_panel_1" prop:role="card" designer:placeholder="Add components here"></anvil-component>
-  </anvil-block>
-  <anvil-block slot="title">
-    <anvil-component type="Label" name="label_1" prop:role="h1" prop:text="Home"></anvil-component>
-  </anvil-block>
-</anvil-form>
+<div class="app-wrapper">
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Label your <span>conversation</span></h2>
+      <p>
+        Below is every turn from your dialogues. For each one, pick the label that
+        best matches what the speaker was doing in that turn — not what they said
+        word-for-word, but their intent. If a turn feels like it could fit two
+        labels, pick the one that feels closest; there's often no single perfect
+        answer, and that's fine.
+      </p>
+    </div>
+  </div>
+
+  <!-- SLOT: progress_label (Label, text "0 / 0 turns labeled") -->
+
+  <div class="stage-body" style="margin-top:10px;">
+    <!-- SLOT: turns_repeater (RepeatingPanel, item template: AnnotationRowTemplate) -->
+  </div>
+
+  <div style="margin-top:20px; text-align:right;">
+    <!-- SLOT: done_button (Button, text "Done annotating", role "btn-uga") -->
+  </div>
+</div>
