@@ -273,3 +273,157 @@ textarea.anvil-text-area:disabled,
     font-size: 28px;
   }
 }
+
+/* custom.css — add this as a Theme Asset / custom CSS in the Anvil app, alongside
+the project's shared style.css (link/import style.css first, this file second).
+These are the page-specific classes the RLHF and coref apps define locally in
+their own <style> blocks — reproduced here so the Anvil app looks and feels like
+the rest of the project. Nothing in here duplicates a class already in style.css
+(.stage, .rack, .chip, .nlg-bubble, .confidence-bar-container, .btn-uga, etc. —
+those are used as-is from style.css). */
+
+.card {
+  background: var(--panel-alt);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 22px 24px;
+}
+.card-locked { border: 2px dashed var(--border-strong); }
+.card-locked .card-body { display: none; }
+
+.locked-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-family: "Merriweather Sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.table-scroll { overflow-x: auto; margin-top: 10px; margin-bottom: 10px; }
+.table-scroll table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table-scroll th, .table-scroll td { border-bottom: 1px solid var(--line); padding: 9px 12px; text-align: left; }
+.table-scroll th {
+  color: var(--muted);
+  font-family: "Merriweather Sans", sans-serif;
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.table-scroll td { color: var(--muted); }
+
+.log-box {
+  background: var(--panel-alt);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12.5px;
+  color: var(--text);
+  margin-top: 10px;
+}
+
+.explanation {
+  background: rgba(0, 78, 96, 0.06);
+  border-left: 4px solid var(--olympic);
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 14px;
+  border-radius: 0 6px 6px 0;
+  color: var(--text);
+}
+
+.discussion-box {
+  background: rgba(180, 189, 0, 0.12);
+  border-left: 4px solid var(--hedges);
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 14px;
+  border-radius: 0 6px 6px 0;
+}
+.discussion-box h4 {
+  margin: 0 0 6px;
+  color: var(--sanford);
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.glossary-box {
+  background: var(--panel-alt);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 13px;
+}
+.glossary-box summary {
+  font-family: "Merriweather Sans", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--olympic);
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  border-radius: 20px;
+  background: var(--panel-alt);
+  border: 1px solid var(--line);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+}
+.tag-yes { background: rgba(0, 78, 96, 0.08); color: var(--olympic); border-color: rgba(0, 78, 96, 0.3); }
+.tag-no  { background: rgba(186, 12, 47, 0.08); color: var(--uga-red); border-color: rgba(186, 12, 47, 0.3); }
+.tag-out-of-stock { background: rgba(186, 12, 47, 0.08); color: var(--uga-red); border-color: rgba(186, 12, 47, 0.3); }
+
+.next-step-bar {
+  background: rgba(0, 78, 96, 0.07);
+  border: 1px solid rgba(0, 78, 96, 0.3);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--olympic);
+}
+
+.progress-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.progress-badge {
+  width: 84px; height: 84px; border-radius: 50%;
+  border: 2px solid var(--uga-red); background: #fff; color: var(--uga-red);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: "Merriweather Sans", sans-serif; font-weight: 800;
+  box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.12);
+}
+.progress-badge .num { font-size: 26px; line-height: 1; }
+
+/* Chat bubble variants — .nlg-bubble is defined in style.css; these modifiers
+distinguish wizard vs. human turns the same way coref's .turn-speaker.human/.ai do */
+.nlg-bubble.wizard { border-left-color: var(--uga-red); margin-left: 40px; }
+.nlg-bubble.human   { border-left-color: var(--uni-blue); margin-right: 40px; }
+.bubble-speaker {
+  font-family: "IBM Plex Mono", monospace; font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 700; display: block; margin-bottom: 4px;
+}
+.bubble-speaker.wizard { color: var(--uga-red); }
+.bubble-speaker.human { color: var(--uni-blue); }
+
+/* Result correctness — icon + color, never color alone (WCAG 1.4.1) */
+.result-correct { color: var(--olympic); font-weight: 700; }
+.result-incorrect { color: var(--uga-red); font-weight: 700; }
