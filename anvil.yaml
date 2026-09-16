@@ -143,9 +143,9 @@ db_schema:
     indexes: []
     server: full
     title: turns
-name: Minimal Theme 2
+name: Wizard of Oz and dialogue annotation
 native_deps: {head_html: <link rel="stylesheet" href="_/theme/style.css">}
-package_name: Minimal_Theme_2
+package_name: Wizard_of_Oz_and_dialogue_annotation
 runtime_options:
   client_version: '3'
   server_spec: {base: python310-minimal}

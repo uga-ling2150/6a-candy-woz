@@ -13,11 +13,9 @@ classifier, and see how it does on a fixed set of test sentences.</p>
   </div>
 
   <anvil-component type="ColumnPanel" name="results_panel" prop:visible="false">
-
     <div style="text-align:center; margin-bottom:16px;">
       <anvil-component type="Label" name="accuracy_label" prop:role="status-success" prop:visible="false"></anvil-component>
     </div>
-
     <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
 
       <div class="stage-body" style="flex:1; min-width:320px;">
@@ -25,24 +23,23 @@ classifier, and see how it does on a fixed set of test sentences.</p>
         <anvil-component type="Label" name="train_size_label"></anvil-component>
 
         <div class="chip-row" style="margin-top:10px; margin-bottom:14px;">
-          <anvil-component type="RepeatingPanel" name="train_label_counts_repeater" prop:role="chip-row" prop:item_template="Minimal_Theme_2.LabelCountChipTemplate"></anvil-component>
+          <anvil-component type="RepeatingPanel" name="train_label_counts_repeater" prop:role="chip-row" prop:item_template="Wizard_of_Oz_and_dialogue_annotation.LabelCountChipTemplate"></anvil-component>
         </div>
 
         <div class="table-scroll">
           <div class="data-row-head training-row">
             <span>Speaker</span><span>Turn text</span><span>Labeled as</span>
           </div>
-          <anvil-component type="RepeatingPanel" name="train_examples_repeater" prop:role="training-table" prop:item_template="Minimal_Theme_2.TrainExampleTemplate"></anvil-component>
+          <anvil-component type="RepeatingPanel" name="train_examples_repeater" prop:role="training-table" prop:item_template="Wizard_of_Oz_and_dialogue_annotation.TrainExampleTemplate"></anvil-component>
         </div>
       </div>
 
       <div class="stage-body" style="flex:1; min-width:320px;">
         <div class="stage-title">Test sentences (instructor-authored)</div>
-        <anvil-component type="RepeatingPanel" name="test_results_repeater" prop:item_template="Minimal_Theme_2.TestResultRowTemplate"></anvil-component>
+        <anvil-component type="RepeatingPanel" name="test_results_repeater" prop:item_template="Wizard_of_Oz_and_dialogue_annotation.TestResultRowTemplate"></anvil-component>
       </div>
 
     </div>
-
   </anvil-component>
 
   <div class="discussion-box" style="margin-top:24px;">
