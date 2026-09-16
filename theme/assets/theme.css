@@ -388,7 +388,8 @@ those are used as-is from style.css). */
 .tag-no  { background: rgba(186, 12, 47, 0.08); color: var(--uga-red); border-color: rgba(186, 12, 47, 0.3); }
 .tag-out-of-stock { background: rgba(186, 12, 47, 0.08); color: var(--uga-red); border-color: rgba(186, 12, 47, 0.3); }
 
-.next-step-bar {
+.next-step-bar,
+.anvil-role-next-step-bar {
   background: rgba(0, 78, 96, 0.07);
   border: 1px solid rgba(0, 78, 96, 0.3);
   padding: 12px 16px;
@@ -456,4 +457,58 @@ distinguish wizard vs. human turns the same way coref's .turn-speaker.human/.ai 
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+/* Bridge Anvil component roles to the shared style.css classes of the same
+name — Anvil's role property renders as .anvil-role-<name>, not the bare
+class, so these components need their own selectors here. */
+.anvil-role-btn-uga > button {
+  background-color: var(--uga-red);
+  border: none;
+  color: #fff;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: opacity 0.2s;
+}
+.anvil-role-btn-uga > button:hover {
+  opacity: 0.9;
+  background-color: var(--uga-red);
+  color: #fff;
+}
+.anvil-role-btn-uga-outline > button {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 8px 16px;
+}
+.anvil-role-btn-uga-outline > button:hover {
+  border-color: var(--uga-red);
+  color: var(--uga-red);
+}
+.anvil-role-machine-intent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--olympic);
+  color: var(--olympic);
+  background: rgba(0, 85, 164, 0.08);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.anvil-role-status-success {
+  color: var(--olympic);
+  font-weight: 600;
+}
+.anvil-role-text-primary {
+  color: var(--bs-primary);
 }

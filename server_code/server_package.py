@@ -7,6 +7,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import anvil.tz
 import random
 import datetime
 
@@ -46,7 +47,7 @@ def create_room(wizard_name):
     dialogue_count=1,
     session_start=None,
     session_end_deadline=None,
-    created_on=datetime.datetime.now(),
+    created_on=datetime.datetime.now(anvil.tz.UTC),
   )
   return code
 
@@ -67,7 +68,7 @@ def join_room(room_code, human_name):
   if room["status"] == "active" and room["human_name"] and room["human_name"] != human_name.strip():
     return {"ok": False, "message": "That room already has a partner."}
 
-  now = datetime.datetime.now()
+  now = datetime.datetime.now(anvil.tz.UTC)
   room.update(
     human_name=human_name.strip(),
     status="active",
