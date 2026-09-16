@@ -7,6 +7,9 @@ go_to_annotation_button, poll_timer.
 """
 from ._anvil_designer import ChatSessionTemplate
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.server
 
 

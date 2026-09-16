@@ -1,4 +1,148 @@
 allow_embedding: false
+db_schema:
+  catalogue_items:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: item_name
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: category
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: flavor_notes
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      client_hidden: false
+      name: in_stock
+      type: bool
+    - admin_ui: {order: 5, width: 200}
+      client_hidden: false
+      name: price
+      type: string
+    indexes: []
+    server: full
+    title: catalogue_items
+  intent_labels:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: label_code
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: label_name
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: description
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: example_phrase
+      type: string
+    indexes: []
+    server: full
+    title: intent_labels
+  rooms:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: room_code
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: wizard_name
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: human_name
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: status
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      client_hidden: false
+      name: dialogue_count
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      client_hidden: false
+      name: session_start
+      type: datetime
+    - admin_ui: {order: 6, width: 200}
+      client_hidden: false
+      name: session_end_deadline
+      type: datetime
+    - admin_ui: {order: 7, width: 200}
+      client_hidden: false
+      name: created_on
+      type: datetime
+    indexes: []
+    server: full
+    title: rooms
+  test_cases:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: text
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: true_label
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: difficulty_note
+      type: string
+    indexes: []
+    server: full
+    title: test_cases
+  turns:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: room
+      target: rooms
+      type: link_single
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: dialogue_number
+      type: number
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: turn_index
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: speaker
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      client_hidden: false
+      name: message_text
+      type: string
+    - admin_ui: {order: 5, width: 200}
+      client_hidden: false
+      name: timestamp
+      type: datetime
+    - admin_ui: {order: 6, width: 200}
+      client_hidden: false
+      name: intent_label
+      type: string
+    - admin_ui: {order: 7, width: 200}
+      client_hidden: false
+      name: annotator_name
+      type: string
+    indexes: []
+    server: full
+    title: turns
 name: Minimal Theme 2
 package_name: Minimal_Theme_2
 runtime_options:
@@ -9,5 +153,5 @@ services:
 - client_config: {enable_v2: true}
   server_config: {}
   source: /runtime/services/tables.yml
-startup: {module: AnnotationForm, type: form}
+startup: {module: Home, type: form}
 startup_form: null

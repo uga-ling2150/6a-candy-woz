@@ -6,6 +6,9 @@ are touched by Python — everything else in Home.html is static markup.
 """
 from ._anvil_designer import HomeTemplate
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.server
 
 

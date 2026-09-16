@@ -4,6 +4,9 @@ Pair with WizardLobby.html. Touches only code_label, catalogue_repeater, poll_ti
 """
 from ._anvil_designer import WizardLobbyTemplate
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.server
 
 
