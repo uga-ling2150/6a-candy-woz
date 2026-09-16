@@ -48,9 +48,9 @@ def get_turns_for_annotation(room_code):
     raise anvil.server.PermissionDenied("Room not found.")
 
   rows = app_tables.turns.search(
-    room=room,
     tables.order_by("dialogue_number"),
     tables.order_by("turn_index"),
+    room=room,
   )
   return [
     {

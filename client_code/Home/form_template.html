@@ -1,7 +1,7 @@
 <div class="app-wrapper">
   <div class="hero">
     <div class="hero-text">
-      <h2>Georgia Candy <span style>WoZ</span></h2>
+      <h2>Georgia Candy <span>WoZ</span></h2>
       <p>
         You'll be paired up to roleplay a conversation at a candy store. One of you
         runs the counter, one of you is the customer. It only takes a few minutes,
@@ -13,25 +13,32 @@
   <div class="card">
     <label for="name-field" class="label-sm">Your name</label>
     <!-- SLOT: name_box  (TextBox, placeholder "e.g. Sam") -->
+    <anvil-component type="TextBox" name="name_box" prop:placeholder="e.g. Sam"></anvil-component>
     <div id="name-field"><!-- SLOT: name_box --></div>
 
     <div style="margin-top:18px;">
       <label class="label-sm">I am the...</label>
       <div class="nlu-row" style="margin-top:8px;">
+        <anvil-component type="RadioButton" name="role_wizard" prop:text="Wizard (candy store worker)" prop:group_name="role"></anvil-component>
+        <anvil-component type="RadioButton" name="role_human" prop:text="Human (customer)" prop:group_name="role"></anvil-component>
+        <anvil-component type="RadioButton" name="role_instructor" prop:text="Instructor" prop:group_name="role"></anvil-component>
         <!-- SLOT: role_wizard      (RadioButton, group "role", text "Wizard (candy store worker)") -->
         <!-- SLOT: role_human       (RadioButton, group "role", text "Human (customer)") -->
         <!-- SLOT: role_instructor  (RadioButton, group "role", text "Instructor") -->
       </div>
     </div>
 
+
     <div style="margin-top:12px;">
+      <anvil-component type="TextBox" name="instructor_code_box" prop:placeholder="Instructor passcode" prop:visible="false"></anvil-component>
       <!-- SLOT: instructor_code_box (TextBox, placeholder "Instructor passcode", visible: False by default) -->
     </div>
 
     <!-- SLOT: error_label (Label, foreground var(--uga-red), visible: False) -->
 
     <div style="margin-top:20px;">
-      <!-- SLOT: continue_button (Button, text "Continue", role "btn-uga") -->
+      <anvil-component type="Button" name="continue_button" prop:text="Continue" prop:role="btn-uga"></anvil-component>
+
     </div>
   </div>
 </div>

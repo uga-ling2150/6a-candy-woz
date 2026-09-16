@@ -139,9 +139,9 @@ def get_turns(room_code, since_index=0):
     raise anvil.server.PermissionDenied("Room not found.")
 
   rows = app_tables.turns.search(
+    tables.order_by("turn_index"),
     room=room,
     dialogue_number=room["dialogue_count"],
-    tables.order_by("turn_index"),
   )
   turns = [
     {
