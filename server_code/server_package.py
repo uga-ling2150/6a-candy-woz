@@ -173,3 +173,29 @@ def end_session(room_code):
   room = app_tables.rooms.get(room_code=room_code)
   if room:
     room.update(status="ended")
+
+
+@anvil.server.callable
+def clear_all_training_data():
+  """Instructor-only reset between classes. Refuses while any room is still
+  waiting for a partner or actively in session, since wiping rooms/turns out
+  from under a live chat would break it."""
+  open_rooms = app_tables.rooms.search(status=q.any_of("waiting", "active"))
+  if list(open_rooms):
+    return {
+      "ok": False,
+      "message": "Can't clear yet — there's still an open chat session. "
+      "Ask everyone to finish or end their session first.",
+    }
+
+  turns_cleared = 0
+  for row in app_tables.turns.search():
+    row.delete()
+    turns_cleared += 1
+
+  rooms_cleared = 0
+  for row in app_tables.rooms.search():
+    row.delete()
+    rooms_cleared += 1
+
+  return {"ok": True, "rooms_cleared": rooms_cleared, "turns_cleared": turns_cleared}
