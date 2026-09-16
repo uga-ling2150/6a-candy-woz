@@ -8,45 +8,42 @@ classifier, and see how it does on a fixed set of test sentences.</p>
   </div>
 
   <div style="text-align:center; margin-bottom:16px;">
-    <!-- SLOT: train_button (Button, text "Train & Test Classifier", role "btn-uga") -->
-    <!-- SLOT: status_label (Label, visible: False, shown while training / on error) -->
+    <anvil-component type="Button" name="train_button" prop:text="Train &amp; Test Classifier" prop:role="btn-uga"></anvil-component>
+    <anvil-component type="Label" name="status_label" prop:visible="false"></anvil-component>
   </div>
 
-  <!-- SLOT: results_panel (ColumnPanel, visible: False; contains everything below) -->
+  <anvil-component type="ColumnPanel" name="results_panel" prop:visible="false">
 
-  <div style="text-align:center; margin-bottom:16px;">
-    <!-- SLOT: accuracy_label (Label, role "status-success", visible: False) -->
-  </div>
-
-  <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
-
-    <div class="stage-body" style="flex:1; min-width:320px;">
-      <div class="stage-title">Training data (from your class)</div>
-      <!-- SLOT: train_size_label (Label) -->
-
-      <div class="nlu-row" style="margin-top:10px; margin-bottom:14px;">
-        <!-- SLOT: train_label_counts_repeater (RepeatingPanel,
-        item template: LabelCountChipTemplate) -->
-      </div>
-
-      <div class="table-scroll">
-        SpeakerTurn textLabeled as
-
-          <!-- SLOT: train_examples_repeater (RepeatingPanel,
-          item template: TrainExampleTemplate) -->
-
-      </div>
+    <div style="text-align:center; margin-bottom:16px;">
+      <anvil-component type="Label" name="accuracy_label" prop:role="status-success" prop:visible="false"></anvil-component>
     </div>
 
-    <div class="stage-body" style="flex:1; min-width:320px;">
-      <div class="stage-title">Test sentences (instructor-authored)</div>
-      <!-- SLOT: test_results_repeater (RepeatingPanel,
-      item template: TestResultRowTemplate) -->
+    <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
+
+      <div class="stage-body" style="flex:1; min-width:320px;">
+        <div class="stage-title">Training data (from your class)</div>
+        <anvil-component type="Label" name="train_size_label"></anvil-component>
+
+        <div class="chip-row" style="margin-top:10px; margin-bottom:14px;">
+          <anvil-component type="RepeatingPanel" name="train_label_counts_repeater" prop:role="chip-row" prop:item_template="Minimal_Theme_2.LabelCountChipTemplate"></anvil-component>
+        </div>
+
+        <div class="table-scroll">
+          <div class="data-row-head training-row">
+            <span>Speaker</span><span>Turn text</span><span>Labeled as</span>
+          </div>
+          <anvil-component type="RepeatingPanel" name="train_examples_repeater" prop:item_template="Minimal_Theme_2.TrainExampleTemplate"></anvil-component>
+        </div>
+      </div>
+
+      <div class="stage-body" style="flex:1; min-width:320px;">
+        <div class="stage-title">Test sentences (instructor-authored)</div>
+        <anvil-component type="RepeatingPanel" name="test_results_repeater" prop:item_template="Minimal_Theme_2.TestResultRowTemplate"></anvil-component>
+      </div>
+
     </div>
 
-  </div>
-
-  <!-- END results_panel -->
+  </anvil-component>
 
   <div class="discussion-box" style="margin-top:24px;">
     <h4>💬 Class discussion</h4>

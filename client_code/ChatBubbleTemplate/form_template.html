@@ -1,0 +1,4 @@
+<div class="nlg-bubble" style="margin-bottom:10px;">
+  <anvil-component type="Label" name="speaker_label" prop:bold="true" bind:text="self.item['speaker'].capitalize()" bind:foreground="'var(--uga-red)' if self.item['speaker'] == 'wizard' else 'var(--uni-blue)'"></anvil-component>
+  <anvil-component type="Label" name="message_label" bind:text="self.item['message_text']"></anvil-component>
+</div>

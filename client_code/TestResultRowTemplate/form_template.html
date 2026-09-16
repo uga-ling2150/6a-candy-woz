@@ -1,0 +1,6 @@
+<div class="test-row" style="flex-direction:column; align-items:stretch; gap:4px;">
+  <anvil-component type="Label" name="text_label" prop:bold="true" bind:text="self.item['text']"></anvil-component>
+  <anvil-component type="Label" name="true_label_label" bind:text="'True: ' + self.item['true_label']"></anvil-component>
+  <anvil-component type="Label" name="predicted_label_label" prop:bold="true" bind:text="('✓ ' if self.item['correct'] else '✗ ') + 'Predicted: ' + self.item['predicted_label'] + ' ({:.0%})'.format(self.item['confidence'])" bind:foreground="'var(--olympic)' if self.item['correct'] else 'var(--uga-red)'"></anvil-component>
+  <anvil-component type="Label" name="breakdown_label" prop:foreground="var(--muted)" prop:font_size="12" bind:text="', '.join('{}: {:.0%}'.format(lbl, p) for lbl, p in self.item['top_scores'])"></anvil-component>
+</div>

@@ -13,23 +13,19 @@
 
   <div class="card" style="text-align:center;">
     <div class="label-sm">Room code</div>
-    <!-- SLOT: code_label (Label, role "machine-intent-badge", set once on load) -->
+    <anvil-component type="Label" name="code_label" prop:role="machine-intent-badge"></anvil-component>
     <p class="placeholder" style="margin-top:10px;">Waiting for your customer to join…</p>
   </div>
 
   <div class="stage-body" style="margin-top:20px;">
     <div class="stage-title">Your catalogue (customers can't see this)</div>
     <div class="table-scroll">
-
-
-      ItemCategoryPriceNotes
-
-        <!-- SLOT: catalogue_repeater (RepeatingPanel, item template: CatalogueItemTemplate) -->
-        <!-- the RepeatingPanel's tbody should be the direct target here -->
-
+      <div class="data-row-head catalogue-row">
+        <span>Item</span><span>Category</span><span>Price</span><span>Notes</span>
+      </div>
+      <anvil-component type="RepeatingPanel" name="catalogue_repeater" prop:item_template="Minimal_Theme_2.CatalogueItemTemplate"></anvil-component>
     </div>
   </div>
 
-  <!-- non-visual, drop anywhere on the form -->
-  <!-- SLOT: poll_timer (Timer, interval 2) -->
+  <anvil-component type="Timer" name="poll_timer" prop:interval="2"></anvil-component>
 </div>

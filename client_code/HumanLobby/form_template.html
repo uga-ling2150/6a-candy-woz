@@ -12,12 +12,14 @@
 
   <div class="card">
     <label for="code-field" class="label-sm">Room code</label>
-    <div id="code-field"><!-- SLOT: code_box (TextBox, placeholder "CANDY-XXXX") --></div>
+    <div id="code-field">
+      <anvil-component type="TextBox" name="code_box" prop:placeholder="CANDY-XXXX"></anvil-component>
+    </div>
 
-    <!-- SLOT: error_label (Label, foreground var(--uga-red), visible: False) -->
+    <anvil-component type="Label" name="error_label" prop:foreground="var(--uga-red)" prop:visible="false"></anvil-component>
 
     <div style="margin-top:20px;">
-      <!-- SLOT: join_button (Button, text "Join", role "btn-uga") -->
+      <anvil-component type="Button" name="join_button" prop:text="Join" prop:role="btn-uga"></anvil-component>
     </div>
   </div>
 </div>

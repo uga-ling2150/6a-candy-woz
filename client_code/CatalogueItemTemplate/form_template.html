@@ -1,0 +1,6 @@
+<div class="catalogue-row">
+  <anvil-component type="Label" name="item_label" bind:text="self.item['item_name']"></anvil-component>
+  <anvil-component type="Label" name="category_label" bind:text="self.item['category']"></anvil-component>
+  <anvil-component type="Label" name="price_label" bind:text="self.item['price']"></anvil-component>
+  <anvil-component type="Label" name="notes_label" bind:text="self.item['flavor_notes'] if self.item['in_stock'] else self.item['flavor_notes'] + ' — out of stock'" bind:foreground="'' if self.item['in_stock'] else 'var(--uga-red)'"></anvil-component>
+</div>

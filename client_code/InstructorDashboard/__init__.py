@@ -19,6 +19,7 @@ class InstructorDashboard(InstructorDashboardTemplate):
     self.init_components(**properties)
     self.results_panel.visible = False
 
+  @handle("train_button", "click")
   def train_button_click(self, **event_args):
     self.status_label.text = "Training..."
     self.status_label.visible = True

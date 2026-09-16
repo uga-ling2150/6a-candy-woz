@@ -12,10 +12,10 @@
     </div>
   </div>
 
-  <!-- SLOT: progress_label (Label, text "0 / 0 turns labeled") -->
+  <anvil-component type="Label" name="progress_label" prop:bold="true"></anvil-component>
 
   <div class="stage-body" style="margin-top:10px;">
-    <!-- SLOT: turns_repeater (RepeatingPanel, item template: AnnotationRowTemplate) -->
+    <anvil-component type="RepeatingPanel" name="turns_repeater" prop:item_template="Minimal_Theme_2.AnnotationRowTemplate"></anvil-component>
   </div>
 
   <div style="margin-top:20px; text-align:right;">

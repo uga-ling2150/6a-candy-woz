@@ -61,9 +61,11 @@ class ChatSession(ChatSessionTemplate):
     self.time_up_panel.visible = True
     self.poll_timer.interval = 0
 
+  @handle("poll_timer", "tick")
   def poll_timer_tick(self, **event_args):
     self._refresh()
 
+  @handle("send_button", "click")
   def send_button_click(self, **event_args):
     text = self.message_box.text.strip() if self.message_box.text else ""
     if not text:
@@ -72,16 +74,19 @@ class ChatSession(ChatSessionTemplate):
     self.message_box.text = ""
     self._refresh()
 
+  @handle("new_dialogue_button", "click")
   def new_dialogue_button_click(self, **event_args):
     anvil.server.call('start_new_dialogue', self.room_code)
     self.last_turn_index = 0
     self.transcript_repeater.items = []
     self._refresh()
 
+  @handle("extend_button", "click")
   def extend_button_click(self, **event_args):
     anvil.server.call('extend_session', self.room_code)
     self._refresh()
 
+  @handle("go_to_annotation_button", "click")
   def go_to_annotation_button_click(self, **event_args):
     open_form(
       'AnnotationForm',

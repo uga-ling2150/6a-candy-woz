@@ -53,17 +53,19 @@ def create_room(wizard_name):
 
 @anvil.server.callable
 def join_room(room_code, human_name):
-  """Human calls this with the code the Wizard shared."""
+  """Human calls this with the code the Wizard shared. Returns an explicit
+  result dict since a bad/expired code is an expected, user-fixable case
+  the client displays inline."""
   if not room_code or not human_name or not human_name.strip():
-    raise anvil.server.PermissionDenied("Enter both the room code and your name.")
+    return {"ok": False, "message": "Enter both the room code and your name."}
 
   room = app_tables.rooms.get(room_code=room_code.strip().upper())
   if not room:
-    raise anvil.server.PermissionDenied("That room code wasn't found. Double check it with your partner.")
+    return {"ok": False, "message": "That room code wasn't found. Double check it with your partner."}
   if room["status"] == "ended":
-    raise anvil.server.PermissionDenied("That room's session already ended.")
+    return {"ok": False, "message": "That room's session already ended."}
   if room["status"] == "active" and room["human_name"] and room["human_name"] != human_name.strip():
-    raise anvil.server.PermissionDenied("That room already has a partner.")
+    return {"ok": False, "message": "That room already has a partner."}
 
   now = datetime.datetime.now()
   room.update(
@@ -72,7 +74,7 @@ def join_room(room_code, human_name):
     session_start=now,
     session_end_deadline=now + datetime.timedelta(minutes=SESSION_MINUTES),
   )
-  return {"room_code": room["room_code"], "wizard_name": room["wizard_name"]}
+  return {"ok": True, "room_code": room["room_code"], "wizard_name": room["wizard_name"]}
 
 
 @anvil.server.callable

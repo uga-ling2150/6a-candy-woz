@@ -19,6 +19,7 @@ class WizardLobby(WizardLobbyTemplate):
     self.catalogue_repeater.items = anvil.server.call('get_catalogue')
     self.poll_timer.interval = 2
 
+  @handle("poll_timer", "tick")
   def poll_timer_tick(self, **event_args):
     status = anvil.server.call('get_room_status', self.room_code)
     if status['status'] == 'active':

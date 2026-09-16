@@ -1,0 +1,7 @@
+<div style="padding:10px 0; border-bottom:1px solid #e2e6ea; display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+  <anvil-component type="Label" name="speaker_label" prop:bold="true" bind:text="self.item['speaker'].capitalize() + ':'"></anvil-component>
+  <anvil-component type="Label" name="message_label" bind:text="self.item['message_text']"></anvil-component>
+  <div style="min-width:220px;">
+    <anvil-component type="DropDown" name="intent_dropdown" prop:placeholder="Choose a label..." bind:items="self.item['label_options']" writeback:selected_value="self.item['intent_label']"></anvil-component>
+  </div>
+</div>

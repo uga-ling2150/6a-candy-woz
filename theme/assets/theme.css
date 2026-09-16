@@ -427,3 +427,33 @@ distinguish wizard vs. human turns the same way coref's .turn-speaker.human/.ai 
 /* Result correctness — icon + color, never color alone (WCAG 1.4.1) */
 .result-correct { color: var(--olympic); font-weight: 700; }
 .result-incorrect { color: var(--uga-red); font-weight: 700; }
+
+/* Flex-based rows for RepeatingPanel item templates standing in for a table */
+.catalogue-row,
+.training-row,
+.test-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 8px 4px;
+  border-bottom: 1px solid #e2e6ea;
+  font-size: 13px;
+}
+.catalogue-row > *,
+.training-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.data-row-head {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: #667085;
+  border-bottom: 2px solid #d8dee8;
+}
+.anvil-role-chip-row > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

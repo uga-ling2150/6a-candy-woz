@@ -22,6 +22,7 @@ class Home(HomeTemplate):
   def role_changed(self, **event_args):
     self.instructor_code_box.visible = self.role_instructor.selected
 
+  @handle("continue_button", "click")
   def continue_button_click(self, **event_args):
     self.error_label.visible = False
     name = self.name_box.text.strip() if self.name_box.text else ""

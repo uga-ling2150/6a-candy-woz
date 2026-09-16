@@ -1,7 +1,7 @@
 <div class="app-wrapper">
   <div class="hero">
     <div class="hero-text">
-      <!-- SLOT: dialogue_label (Label, e.g. "Dialogue 1") -->
+      <anvil-component type="Label" name="dialogue_label" prop:role="h1"></anvil-component>
       <p style="margin-top:6px;">
         Keep it natural — order candy, ask questions, change your mind, whatever
         feels real. When you're done with one exchange, start a fresh one below.
@@ -9,49 +9,46 @@
     </div>
     <div class="progress-wrap">
       <div class="progress-badge">
-        <!-- SLOT: timer_label (Label, text "10:00"; role toggles to "text-primary"
-        under 60s remaining as a visual — not sole — warning cue) -->
+        <anvil-component type="Label" name="timer_label" prop:text="10:00"></anvil-component>
       </div>
-      <!-- SLOT: extend_button (Button, text "+2 minutes", role "btn-uga-outline") -->
+      <anvil-component type="Button" name="extend_button" prop:text="+2 minutes" prop:role="btn-uga-outline"></anvil-component>
     </div>
   </div>
 
-  <!-- SLOT: catalogue_panel (ColumnPanel; visible only for role=='wizard') -->
-  <div class="stage-body" style="margin-bottom:20px;">
-    <div class="stage-title">Catalogue reference</div>
-    <div class="table-scroll">
-      ItemCategoryPriceNotes
-
-        <!-- SLOT: catalogue_repeater (RepeatingPanel, item template: CatalogueItemTemplate) -->
-
+  <anvil-component type="ColumnPanel" name="catalogue_panel">
+    <div class="stage-body" style="margin-bottom:20px;">
+      <div class="stage-title">Catalogue reference</div>
+      <div class="table-scroll">
+        <div class="data-row-head catalogue-row">
+          <span>Item</span><span>Category</span><span>Price</span><span>Notes</span>
+        </div>
+        <anvil-component type="RepeatingPanel" name="catalogue_repeater" prop:item_template="Minimal_Theme_2.CatalogueItemTemplate"></anvil-component>
+      </div>
     </div>
-  </div>
-  <!-- END catalogue_panel -->
+  </anvil-component>
 
   <div class="stage-body">
     <div class="stage-title">Your conversation</div>
     <div class="transcript-box">
-      <!-- SLOT: transcript_repeater (RepeatingPanel, item template: ChatBubbleTemplate) -->
+      <anvil-component type="RepeatingPanel" name="transcript_repeater" prop:item_template="Minimal_Theme_2.ChatBubbleTemplate"></anvil-component>
     </div>
 
     <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
-      <!-- SLOT: message_box (TextBox, placeholder "Type your message...", flex:1) -->
-      <!-- SLOT: send_button (Button, text "Send", role "btn-uga") -->
+      <div style="flex:1; min-width:200px;">
+        <anvil-component type="TextBox" name="message_box" prop:placeholder="Type your message..."></anvil-component>
+      </div>
+      <anvil-component type="Button" name="send_button" prop:text="Send" prop:role="btn-uga"></anvil-component>
     </div>
 
     <div style="margin-top:10px;">
-      <!-- SLOT: new_dialogue_button (Button, text "End this dialogue, start a new one",
-      role "btn-uga-outline") -->
+      <anvil-component type="Button" name="new_dialogue_button" prop:text="End this dialogue, start a new one" prop:role="btn-uga-outline"></anvil-component>
     </div>
   </div>
 
-  <!-- SLOT: time_up_panel (ColumnPanel, role "next-step-bar", visible: False by
-  default; contains time_up_label and go_to_annotation_button inside it) -->
-  <!--   inside time_up_panel: -->
-  <!--   SLOT: time_up_label (Label, text "Time's up! Head over to annotation to
-  label the turns from your dialogues.") -->
-  <!--   SLOT: go_to_annotation_button (Button, text "Go to annotation", role "btn-uga") -->
-  <!-- END time_up_panel -->
+  <anvil-component type="ColumnPanel" name="time_up_panel" prop:role="next-step-bar" prop:visible="false">
+    <anvil-component type="Label" name="time_up_label" prop:text="Time's up! Head over to annotation to label the turns from your dialogues."></anvil-component>
+    <anvil-component type="Button" name="go_to_annotation_button" prop:text="Go to annotation" prop:role="btn-uga"></anvil-component>
+  </anvil-component>
 
-  <!-- SLOT: poll_timer (Timer, interval 2) -->
+  <anvil-component type="Timer" name="poll_timer" prop:interval="2"></anvil-component>
 </div>
