@@ -305,7 +305,14 @@ those are used as-is from style.css). */
   letter-spacing: 0.02em;
 }
 
-.table-scroll { overflow-x: auto; margin-top: 10px; margin-bottom: 10px; }
+.table-scroll {
+  overflow-x: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
 .table-scroll table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .table-scroll th, .table-scroll td { border-bottom: 1px solid var(--line); padding: 9px 12px; text-align: left; }
 .table-scroll th {
@@ -429,9 +436,45 @@ distinguish wizard vs. human turns the same way coref's .turn-speaker.human/.ai 
 .result-correct { color: var(--olympic); font-weight: 700; }
 .result-incorrect { color: var(--uga-red); font-weight: 700; }
 
-/* Flex-based rows for RepeatingPanel item templates standing in for a table */
+/* CSS-table rows for RepeatingPanel item templates standing in for a real
+<table> — real <table>/<tr>/<td> tags aren't used here because a RepeatingPanel
+renders its own wrapper <div>s around each item, and browsers reparent stray
+divs out of literal <table>/<tbody> context. display:table on .table-scroll
+(the shared ancestor) keeps column widths aligned between the header row and
+every repeated row without that risk. The RepeatingPanel root gets
+prop:role="catalogue-table" / "training-table" so its rendering box can be
+bridged into the table layout via display:contents. */
+.anvil-role-catalogue-table,
+.anvil-role-training-table {
+  display: contents;
+}
+.anvil-role-catalogue-table > div,
+.anvil-role-training-table > div {
+  display: table-row-group;
+}
+.data-row-head,
 .catalogue-row,
-.training-row,
+.training-row {
+  display: table-row;
+}
+.data-row-head > *,
+.catalogue-row > *,
+.training-row > * {
+  display: table-cell;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line, #e0e0e0);
+  text-align: left;
+  vertical-align: top;
+  font-size: 13px;
+}
+.data-row-head > * {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted, #667085);
+  border-bottom: 2px solid var(--border-strong, #d8dee8);
+}
 .test-row {
   display: flex;
   gap: 12px;
@@ -439,19 +482,6 @@ distinguish wizard vs. human turns the same way coref's .turn-speaker.human/.ai 
   padding: 8px 4px;
   border-bottom: 1px solid #e2e6ea;
   font-size: 13px;
-}
-.catalogue-row > *,
-.training-row > * {
-  flex: 1 1 0;
-  min-width: 0;
-}
-.data-row-head {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  color: #667085;
-  border-bottom: 2px solid #d8dee8;
 }
 .anvil-role-chip-row > div {
   display: flex;

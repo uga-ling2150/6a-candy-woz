@@ -144,6 +144,7 @@ db_schema:
     server: full
     title: turns
 name: Minimal Theme 2
+native_deps: {head_html: <link rel="stylesheet" href="_/theme/style.css">}
 package_name: Minimal_Theme_2
 runtime_options:
   client_version: '3'

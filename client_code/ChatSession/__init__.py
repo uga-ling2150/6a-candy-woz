@@ -21,6 +21,7 @@ class ChatSession(ChatSessionTemplate):
     self.student_name = student_name
     self.last_turn_index = 0
     self.time_up = False
+    self._refreshing = False
 
     self.catalogue_panel.visible = (role == 'wizard')
     if role == 'wizard':
@@ -37,21 +38,30 @@ class ChatSession(ChatSessionTemplate):
     return "{:d}:{:02d}".format(seconds // 60, seconds % 60)
 
   def _refresh(self):
-    status = anvil.server.call('get_room_status', self.room_code)
-    self.dialogue_label.text = "Dialogue {}".format(status['dialogue_count'])
+    # send_button_click and poll_timer can both call this; anvil.server.call
+    # yields to the browser event loop, so an overlapping call would race on
+    # self.last_turn_index and append the same turn twice.
+    if self._refreshing:
+      return
+    self._refreshing = True
+    try:
+      status = anvil.server.call('get_room_status', self.room_code)
+      self.dialogue_label.text = "Dialogue {}".format(status['dialogue_count'])
 
-    seconds_left = status['seconds_left']
-    if seconds_left is not None:
-      self.timer_label.text = self._format_seconds(seconds_left)
-      if seconds_left <= 60 and not self.time_up:
-        self.timer_label.role = 'text-primary'  # visual warning, not the only cue
-      if seconds_left <= 0 and not self.time_up:
-        self._handle_time_up()
+      seconds_left = status['seconds_left']
+      if seconds_left is not None:
+        self.timer_label.text = self._format_seconds(seconds_left)
+        if seconds_left <= 60 and not self.time_up:
+          self.timer_label.role = 'text-primary'  # visual warning, not the only cue
+        if seconds_left <= 0 and not self.time_up:
+          self._handle_time_up()
 
-    result = anvil.server.call('get_turns', self.room_code, self.last_turn_index)
-    if result['turns']:
-      self.transcript_repeater.items = (self.transcript_repeater.items or []) + result['turns']
-      self.last_turn_index = result['turns'][-1]['turn_index']
+      result = anvil.server.call('get_turns', self.room_code, self.last_turn_index)
+      if result['turns']:
+        self.transcript_repeater.items = (self.transcript_repeater.items or []) + result['turns']
+        self.last_turn_index = result['turns'][-1]['turn_index']
+    finally:
+      self._refreshing = False
 
   def _handle_time_up(self):
     self.time_up = True

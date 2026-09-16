@@ -87,7 +87,7 @@ def get_room_status(room_code):
 
   seconds_left = None
   if room["session_end_deadline"]:
-    seconds_left = (room["session_end_deadline"] - datetime.datetime.now()).total_seconds()
+    seconds_left = (room["session_end_deadline"] - datetime.datetime.now(anvil.tz.UTC)).total_seconds()
 
   return {
     "status": room["status"],
@@ -128,7 +128,7 @@ def send_turn(room_code, speaker, message_text):
     turn_index=next_index,
     speaker=speaker,
     message_text=message_text.strip(),
-    timestamp=datetime.datetime.now(),
+    timestamp=datetime.datetime.now(anvil.tz.UTC),
     intent_label=None,
     annotator_name=None,
   )

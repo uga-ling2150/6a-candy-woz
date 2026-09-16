@@ -22,7 +22,7 @@
         <div class="data-row-head catalogue-row">
           <span>Item</span><span>Category</span><span>Price</span><span>Notes</span>
         </div>
-        <anvil-component type="RepeatingPanel" name="catalogue_repeater" prop:item_template="Minimal_Theme_2.CatalogueItemTemplate"></anvil-component>
+        <anvil-component type="RepeatingPanel" name="catalogue_repeater" prop:role="catalogue-table" prop:item_template="Minimal_Theme_2.CatalogueItemTemplate"></anvil-component>
       </div>
     </div>
   </anvil-component>
@@ -46,7 +46,7 @@
   </div>
 
   <anvil-component type="ColumnPanel" name="time_up_panel" prop:role="next-step-bar" prop:visible="false">
-    <anvil-component type="Label" name="time_up_label" prop:text="Time's up! Head over to annotation to label the turns from your dialogues."></anvil-component>
+    <anvil-component type="Label" name="time_up_label" prop:text="Time's up! Head over to annotation to label the turns from your dialogues. [Do this on only one person's computer! The other person can let your laptop rest.]"></anvil-component>
     <anvil-component type="Button" name="go_to_annotation_button" prop:text="Go to annotation" prop:role="btn-uga"></anvil-component>
   </anvil-component>
 
