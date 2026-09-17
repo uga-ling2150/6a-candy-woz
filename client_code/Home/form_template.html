@@ -64,19 +64,19 @@
     <anvil-component type="Label" name="error_label" prop:foreground="var(--uga-red)" prop:visible="false"></anvil-component>
     <div style="margin-top:20px;"><anvil-component type="Button" name="continue_button" prop:text="Continue" prop:role="btn-uga"></anvil-component></div>
   </section>
-
-  <section id="woz-discussion" aria-labelledby="woz-discussion-title" class="card">
-    <h2 id="woz-discussion-title" class="uga-accent">Discussion questions</h2>
-    <ol>
-      <li>Which turns were hard to label? Could one turn serve more than one purpose, or fit none of the available categories?</li>
-      <li>What did you use from the surrounding conversation that a classifier looking at one turn might miss?</li>
-      <li>How did the customer's role and the worker's responses change the conversation? What kinds of examples are missing from our class dataset?</li>
-      <li>How might fixed intent categories encourage people to change the way they speak? Who might find that difficult, and what would make the interaction more accessible?</li>
-      <li>What is lost when a conversation becomes rows labelled Human or Worker? How well did the plan for the interaction capture what actually happened?</li>
-      <li>After the class test, examine a misclassification. Does it suggest a missing example, an unclear category, or a limitation of the approach?</li>
-    </ol>
-  </section>
 </main>
+
+<section id="woz-discussion" aria-labelledby="woz-discussion-title" class="reflection-container">
+  <h3 id="woz-discussion-title" class="uga-accent mb-3">Discussion questions</h3>
+  <ol>
+    <li>Which turns were hard to label? Could one turn serve more than one purpose, or fit none of the available categories?</li>
+    <li>What did you use from the surrounding conversation that a classifier looking at one turn might miss?</li>
+    <li>How did the customer's role and the worker's responses change the conversation? What kinds of examples are missing from our class dataset?</li>
+    <li>How might fixed intent categories encourage people to change the way they speak? Who might find that difficult, and what would make the interaction more accessible?</li>
+    <li>What is lost when a conversation becomes rows labelled Human or Worker? How well did the plan for the interaction capture what actually happened?</li>
+    <li>After the class test, examine a misclassification. Does it suggest a missing example, an unclear category, or a limitation of the approach?</li>
+  </ol>
+</section>
 <style>
   .woz-home .card { margin-bottom:24px; }
   .woz-home .woz-hero { display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
