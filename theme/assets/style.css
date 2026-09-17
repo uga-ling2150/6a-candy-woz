@@ -330,7 +330,7 @@ this project's .card is a plain content box, so reassert block flow. */
   min-height: 20px;
   font-family: "IBM Plex Mono", monospace;
 }
-.placeholder {
+.hint-text {
   color: var(--muted);
   font-style: italic;
 }
