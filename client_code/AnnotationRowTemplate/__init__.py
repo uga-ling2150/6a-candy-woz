@@ -8,11 +8,16 @@ Touches: intent_dropdown.
 from ._anvil_designer import AnnotationRowTemplateTemplate
 from anvil import *
 import anvil.server
+import anvil.js
 
 
 class AnnotationRowTemplate(AnnotationRowTemplateTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
+    node = anvil.js.get_dom_node(self.intent_dropdown)
+    if node.tagName.lower() != "select":
+      node = node.querySelector("select")
+    node.setAttribute("aria-label", "Intent for dialogue {}, turn {} ({}): {}".format(self.item.get("dialogue_number", ""), self.item.get("turn_index", ""), self.item.get("speaker", ""), self.item.get("message_text", "")))
 
   @handle("intent_dropdown", "change")
   def intent_dropdown_change(self, **event_args):
