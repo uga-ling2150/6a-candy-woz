@@ -134,6 +134,7 @@ def get_room_status(room_code):
     "human_name": room["human_name"],
     "dialogue_count": room["dialogue_count"],
     "seconds_left": seconds_left,
+    "human_persona": room["human_persona"],
   }
 
 
@@ -213,7 +214,7 @@ def start_new_dialogue(room_code):
     raise anvil.server.PermissionDenied("This session isn't active.")
   new_persona = _assign_persona(room["human_name"], _persona_history(room["human_persona"]))
   room.update(dialogue_count=room["dialogue_count"] + 1, human_persona=new_persona)
-  return {"dialogue_count": room["dialogue_count"], "human_persona": new_persona}
+  return room["dialogue_count"]
 
 
 @anvil.server.callable

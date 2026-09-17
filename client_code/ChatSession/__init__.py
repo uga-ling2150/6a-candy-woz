@@ -77,6 +77,8 @@ class ChatSession(ChatSessionTemplate):
         self.current_dialogue = status['dialogue_count']
         self.last_turn_index = 0
         self.transcript_repeater.items = []
+        if self.role == "human":
+          self._update_persona_display(status['human_persona'])
       self.dialogue_label.text = "Dialogue {}".format(status['dialogue_count'])
 
       seconds_left = status['seconds_left']
@@ -147,11 +149,9 @@ class ChatSession(ChatSessionTemplate):
 
   @handle("new_dialogue_button", "click")
   def new_dialogue_button_click(self, **event_args):
-    result = anvil.server.call('start_new_dialogue', self.room_code)
+    anvil.server.call('start_new_dialogue', self.room_code)
     self.last_turn_index = 0
     self.transcript_repeater.items = []
-    if self.role == "human":
-      self._update_persona_display(result["human_persona"])
     self._refresh()
 
   @handle("extend_button", "click")
