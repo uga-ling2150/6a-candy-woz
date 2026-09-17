@@ -16,7 +16,7 @@ class AnnotationForm(AnnotationFormTemplate):
     self.student_name = student_name
 
     label_options = anvil.server.call('get_intent_labels')
-    dropdown_items = [(o['label_name'], o['label_code']) for o in label_options]
+    dropdown_items = [('Choose an intent...', None)] + [(o['label_name'], o['label_code']) for o in label_options]
 
     self.turns = anvil.server.call('get_turns_for_annotation', room_code)
     for t in self.turns:
