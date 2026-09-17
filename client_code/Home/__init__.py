@@ -16,6 +16,17 @@ import anvil.js
 class Home(HomeTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
+    document = anvil.js.window.document
+    banner = document.querySelector("#anvil-header")
+    if banner:
+      banner.setAttribute("role", "banner")
+    for selector in ["#anvil-header img", "#anvil-badge img"]:
+      image = document.querySelector(selector)
+      if image:
+        image.setAttribute("alt", "Anvil")
+    badge = document.querySelector("#anvil-badge")
+    if badge:
+      badge.setAttribute("aria-label", "Built with Anvil")
     for component, name in [(self.name_box, 'Your name'), (self.instructor_code_box, 'Instructor passcode')]:
       node = anvil.js.get_dom_node(component)
       if node.tagName.lower() != 'input':
