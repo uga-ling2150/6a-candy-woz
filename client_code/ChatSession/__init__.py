@@ -21,7 +21,7 @@ class ChatSession(ChatSessionTemplate):
     dialogue_heading.setAttribute("role", "heading")
     dialogue_heading.setAttribute("aria-level", "2")
     root = anvil.js.get_dom_node(self)
-    self.activity_nodes = {name: root.querySelector("#woz-" + name.replace("_", "-")) for name in ["persona_title", "persona_text", "persona_panel", "message_count", "message_error"]}
+    self.activity_nodes = {name: root.querySelector("#woz-" + name.replace("_", "-")) for name in ["persona_title", "persona_text", "persona_panel", "persona_hint", "message_count", "message_error"]}
     self.room_code = room_code
     self.role = role
     self.student_name = student_name
@@ -53,12 +53,19 @@ class ChatSession(ChatSessionTemplate):
     self._refresh()  # initial paint so students aren't staring at a blank screen
 
   def _update_persona_display(self, human_persona):
-    if human_persona:
+    persona_code = human_persona.get("persona_code") if human_persona else None
+    if persona_code:
       self.activity_nodes["persona_title"].textContent = human_persona.get("title", "Your customer role")
       self.activity_nodes["persona_text"].textContent = human_persona.get("prompt", "")
-      self.activity_nodes["persona_panel"].hidden = False
+      self.activity_nodes["persona_hint"].hidden = False
     else:
-      self.activity_nodes["persona_panel"].hidden = True
+      self.activity_nodes["persona_title"].textContent = "No customer role assigned"
+      self.activity_nodes["persona_text"].textContent = (
+        "Now you can act freely, and order anything you want! "
+        "You are no longer assigned a user persona."
+      )
+      self.activity_nodes["persona_hint"].hidden = True
+    self.activity_nodes["persona_panel"].hidden = False
 
   def _format_seconds(self, seconds):
     seconds = max(0, int(seconds))
@@ -149,6 +156,8 @@ class ChatSession(ChatSessionTemplate):
 
   @handle("new_dialogue_button", "click")
   def new_dialogue_button_click(self, **event_args):
+    if self.time_up:
+      return
     anvil.server.call('start_new_dialogue', self.room_code)
     self.last_turn_index = 0
     self.transcript_repeater.items = []

@@ -30,25 +30,33 @@ def _make_room_code():
 
 
 def _persona_history(human_persona):
-  """human_persona carries the persona codes already shown to this human in
-  the current room (one per dialogue so far), oldest first."""
+  """Persona codes already shown to this human in the current room so far,
+  oldest first. Reads the explicit history list when present (even if it's
+  empty, e.g. once every persona has already been used) and only falls back
+  to the single persona_code for rooms assigned before history tracking
+  existed."""
   if not human_persona:
     return []
-  return human_persona.get("history") or [human_persona["persona_code"]]
+  if "history" in human_persona:
+    return human_persona["history"]
+  code = human_persona.get("persona_code")
+  return [code] if code else []
 
 
 def _assign_persona(human_name, prior_history):
   """Give this human a customer role they haven't had yet — not in an
   earlier dialogue of this room (prior_history) and not in an earlier room.
-  Once every persona has already been used by this name, return None so
-  they get a free-form session instead of a repeat."""
+  Once every persona has already been used by this name, keep returning a
+  role-less result (never bare None) so the exhausted history is preserved
+  and later dialogues stay free-form instead of looping back through the
+  same personas."""
   personas = list(app_tables.user_personas.search())
   used_codes = set(prior_history)
   for row in app_tables.rooms.search(human_name=human_name):
     used_codes.update(_persona_history(row["human_persona"]))
   unused = [p for p in personas if p["persona_code"] not in used_codes]
   if not unused:
-    return None
+    return {"persona_code": None, "title": None, "prompt": None, "history": prior_history}
   chosen = random.choice(unused)
   return {
     "persona_code": chosen["persona_code"],
@@ -212,6 +220,8 @@ def start_new_dialogue(room_code):
   room = app_tables.rooms.get(room_code=room_code)
   if not room or room["status"] != "active":
     raise anvil.server.PermissionDenied("This session isn't active.")
+  if room["session_end_deadline"] and datetime.datetime.now(anvil.tz.UTC) >= room["session_end_deadline"]:
+    raise anvil.server.PermissionDenied("Time's up for this session.")
   new_persona = _assign_persona(room["human_name"], _persona_history(room["human_persona"]))
   room.update(dialogue_count=room["dialogue_count"] + 1, human_persona=new_persona)
   return room["dialogue_count"]
