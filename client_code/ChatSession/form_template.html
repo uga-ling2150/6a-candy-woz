@@ -15,9 +15,16 @@
     </div>
   </div>
 
+  <section id="woz-persona-panel" hidden class="card" style="margin-bottom:20px;">
+    <p class="label-sm">Human only · Your customer role</p>
+    <h2 id="woz-persona-title">Your customer role</h2>
+    <p id="woz-persona-text"></p>
+    <p>Use this as a starting point, not a script. Speak in your own words and keep this card to yourself.</p>
+  </section>
+
   <anvil-component type="ColumnPanel" name="catalogue_panel">
     <div class="stage-body" style="margin-bottom:20px;">
-      <div class="stage-title">Catalogue reference</div>
+      <h2 class="stage-title">Catalogue reference</h2>
       <div class="table-scroll">
         <div class="data-row-head catalogue-row">
           <span>Item</span><span>Category</span><span>Price</span><span>Notes</span>
@@ -28,7 +35,7 @@
   </anvil-component>
 
   <div class="stage-body">
-    <div class="stage-title">Your conversation</div>
+    <h2 class="stage-title">Your conversation</h2>
     <div class="transcript-box">
       <anvil-component type="RepeatingPanel" name="transcript_repeater" prop:item_template="Wizard_of_Oz_and_dialogue_annotation.ChatBubbleTemplate"></anvil-component>
     </div>
@@ -39,6 +46,10 @@
       </div>
       <anvil-component type="Button" name="send_button" prop:text="Send" prop:role="btn-uga"></anvil-component>
     </div>
+
+    <p id="woz-message-help">Keep each message to 1,000 characters or fewer. You can send another message to continue your thought.</p>
+    <p id="woz-message-count">0 / 1,000 characters</p>
+    <p id="woz-message-error" role="alert" hidden></p>
 
     <div style="margin-top:10px;">
       <anvil-component type="Button" name="new_dialogue_button" prop:text="End this dialogue, start a new one" prop:role="btn-uga-outline"></anvil-component>

@@ -10,11 +10,19 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import anvil.js
 
 
 class Home(HomeTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
+    for component, name in [(self.name_box, 'Your name'), (self.instructor_code_box, 'Instructor passcode')]:
+      node = anvil.js.get_dom_node(component)
+      if node.tagName.lower() != 'input':
+        node = node.querySelector('input')
+      node.setAttribute('aria-label', name)
+    error_node = anvil.js.get_dom_node(self.error_label)
+    error_node.setAttribute('role', 'alert')
     self.role_instructor.set_event_handler('change', self.role_changed)
     self.role_wizard.set_event_handler('change', self.role_changed)
     self.role_human.set_event_handler('change', self.role_changed)

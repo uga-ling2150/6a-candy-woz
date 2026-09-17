@@ -215,3 +215,102 @@ def seed_reference_data():
       added["test_cases"] += 1
 
   return added
+
+
+# Reference additions agreed at the September 16 meeting.
+USER_PERSONAS = [
+  {
+    "persona_code": "returning_customer",
+    "title": "A returning customer",
+    "prompt": "You love Georgia Peach Gummies and have come back for another bag. You are not sure whether they are available today. Find out what you can buy and decide how much you want."
+  },
+  {
+    "persona_code": "family_gift",
+    "title": "A gift for family",
+    "prompt": "This is your first visit to Georgia. You want to take candy home to your family in California, but you do not know the local favorites. Find something they might enjoy and decide what to buy."
+  },
+  {
+    "persona_code": "budget",
+    "title": "A small treat on a budget",
+    "prompt": "You have about $5 to spend and want a treat for yourself. You enjoy both chocolate and chewy candy. Explore your choices and their prices before deciding."
+  },
+  {
+    "persona_code": "sour_fan",
+    "title": "Looking for something sour",
+    "prompt": "You love sour candy, but your friend prefers something milder. You would like to get a treat for each of you. Find out what would suit you both."
+  },
+  {
+    "persona_code": "seasonal_favorite",
+    "title": "Finding a seasonal favorite",
+    "prompt": "You remember enjoying Damn Good Dawg Chews on an earlier visit. You hope to buy them again today. If they are unavailable, decide whether another candy would work."
+  },
+  {
+    "persona_code": "game_day",
+    "title": "A game-day snack",
+    "prompt": "You are bringing snacks to a small game-day gathering. You do not yet know what to get or how much. Talk with the worker about the choices and make a plan."
+  },
+  {
+    "persona_code": "chocolate_gift",
+    "title": "Choosing a chocolate gift",
+    "prompt": "You want a chocolate gift for someone who prefers dark chocolate to milk chocolate. Several names on the menu are unfamiliar. Find out what the products are like before choosing."
+  },
+  {
+    "persona_code": "changing_plans",
+    "title": "An order for two people",
+    "prompt": "You planned to buy a treat for yourself, then remembered that your roommate asked for one too. Work out what to buy for both of you. You can revise your choice as you learn about the options."
+  }
+]
+
+WORKER_INTENTS = [
+  {
+    "label_code": "inform_price",
+    "label_name": "Worker: Give a Price",
+    "description": "The worker states an item price or order total.",
+    "example_phrase": "The chocolate bark is four dollars."
+  },
+  {
+    "label_code": "inform_availability",
+    "label_name": "Worker: Explain Availability",
+    "description": "The worker says whether an item is available or out of stock.",
+    "example_phrase": "We are out of the caramel chews today."
+  },
+  {
+    "label_code": "recommend_item",
+    "label_name": "Worker: Recommend an Item",
+    "description": "The worker suggests an item that may suit the customer.",
+    "example_phrase": "If you like sour candy, try the rainbow belts."
+  },
+  {
+    "label_code": "describe_item",
+    "label_name": "Worker: Describe an Item",
+    "description": "The worker explains an item, its flavor, or its ingredients.",
+    "example_phrase": "The honeycomb toffee is covered in dark chocolate."
+  },
+  {
+    "label_code": "clarify_request",
+    "label_name": "Worker: Clarify a Request",
+    "description": "The worker asks a question to resolve missing or unclear order details.",
+    "example_phrase": "Did you mean one bag or two?"
+  },
+  {
+    "label_code": "confirm_order",
+    "label_name": "Worker: Confirm an Order",
+    "description": "The worker repeats or acknowledges the order being prepared.",
+    "example_phrase": "That is two bags of peach gummies for you."
+  }
+]
+
+def seed_meeting_data():
+  """Add new reference rows only; preserve existing labels and classroom data.
+  Run once from the editor's server console after adding user_personas.
+  """
+  added = {"user_personas": 0, "worker_intents": 0}
+  for row in USER_PERSONAS:
+    if not app_tables.user_personas.get(persona_code=row["persona_code"]):
+      app_tables.user_personas.add_row(**row)
+      added["user_personas"] += 1
+  for row in WORKER_INTENTS:
+    if not app_tables.intent_labels.get(label_code=row["label_code"]):
+      app_tables.intent_labels.add_row(**row)
+      added["worker_intents"] += 1
+  return added

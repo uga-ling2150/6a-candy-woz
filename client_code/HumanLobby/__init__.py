@@ -34,5 +34,6 @@ class HumanLobby(HumanLobbyTemplate):
       'ChatSession',
       room_code=result['room_code'],
       role='human',
+      human_persona=result.get('human_persona'),
       student_name=self.student_name,
     )

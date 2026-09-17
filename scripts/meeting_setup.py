@@ -1,0 +1,2 @@
+from Wizard_of_Oz_and_dialogue_annotation.server_seed import seed_meeting_data
+print(seed_meeting_data())

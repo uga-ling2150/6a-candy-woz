@@ -11,17 +11,27 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import anvil.js
 
 
 class ChatSession(ChatSessionTemplate):
-  def __init__(self, room_code, role, student_name, **properties):
+  def __init__(self, room_code, role, student_name, human_persona=None, **properties):
     self.init_components(**properties)
+    root = anvil.js.get_dom_node(self)
+    self.activity_nodes = {name: root.querySelector("#woz-" + name.replace("_", "-")) for name in ["persona_title", "persona_text", "persona_panel", "message_count", "message_error"]}
     self.room_code = room_code
     self.role = role
     self.student_name = student_name
     self.last_turn_index = 0
     self.time_up = False
     self._refreshing = False
+    self._sending = False
+    self.current_dialogue = None
+
+    if role == "human" and human_persona:
+      self.activity_nodes["persona_title"].textContent = human_persona.get("title", "Your customer role")
+      self.activity_nodes["persona_text"].textContent = human_persona.get("prompt", "")
+      self.activity_nodes["persona_panel"].hidden = False
 
     self.catalogue_panel.visible = (role == 'wizard')
     if role == 'wizard':
@@ -29,6 +39,14 @@ class ChatSession(ChatSessionTemplate):
 
     self.time_up_panel.visible = False
     self.message_box.set_event_handler('pressed_enter', self.send_button_click)
+    message_input = anvil.js.get_dom_node(self.message_box)
+    if message_input.tagName.lower() != 'input':
+      message_input = message_input.querySelector('input')
+    message_input.setAttribute('maxlength', '1000')
+    message_input.setAttribute('aria-label', 'Your message')
+    message_input.setAttribute('aria-describedby', 'woz-message-help woz-message-count')
+    message_input.addEventListener('input', self.message_changed)
+    self.message_changed()
 
     self.poll_timer.interval = 2
     self._refresh()  # initial paint so students aren't staring at a blank screen
@@ -46,11 +64,23 @@ class ChatSession(ChatSessionTemplate):
     self._refreshing = True
     try:
       status = anvil.server.call('get_room_status', self.room_code)
+      if self.current_dialogue != status['dialogue_count']:
+        self.current_dialogue = status['dialogue_count']
+        self.last_turn_index = 0
+        self.transcript_repeater.items = []
       self.dialogue_label.text = "Dialogue {}".format(status['dialogue_count'])
 
       seconds_left = status['seconds_left']
       if seconds_left is not None:
         self.timer_label.text = self._format_seconds(seconds_left)
+        if seconds_left > 0 and self.time_up:
+          self.time_up = False
+          self.message_box.enabled = True
+          self.send_button.enabled = True
+          self.new_dialogue_button.enabled = True
+          self.time_up_panel.visible = False
+        if seconds_left > 60:
+          self.timer_label.role = None
         if seconds_left <= 60 and not self.time_up:
           self.timer_label.role = 'text-primary'  # visual warning, not the only cue
         if seconds_left <= 0 and not self.time_up:
@@ -69,20 +99,42 @@ class ChatSession(ChatSessionTemplate):
     self.send_button.enabled = False
     self.new_dialogue_button.enabled = False
     self.time_up_panel.visible = True
-    self.poll_timer.interval = 0
+    self.poll_timer.interval = 2
 
   @handle("poll_timer", "tick")
   def poll_timer_tick(self, **event_args):
     self._refresh()
 
+  def message_changed(self, *args, **event_args):
+    length = len(self.message_box.text or "")
+    self.activity_nodes['message_count'].textContent = "{} / 1,000 characters".format(length)
+    self.activity_nodes['message_error'].hidden = True
+
   @handle("send_button", "click")
   def send_button_click(self, **event_args):
-    text = self.message_box.text.strip() if self.message_box.text else ""
+    if self._sending or self.time_up:
+      return
+    raw_text = self.message_box.text or ""
+    text = raw_text.strip()
     if not text:
       return
-    anvil.server.call('send_turn', self.room_code, self.role, text)
-    self.message_box.text = ""
-    self._refresh()
+    if len(raw_text) > 1000:
+      self.activity_nodes['message_error'].textContent = "Please keep each message to 1,000 characters or fewer."
+      self.activity_nodes['message_error'].hidden = False
+      return
+    self._sending = True
+    self.send_button.enabled = False
+    try:
+      anvil.server.call('send_turn', self.room_code, self.role, raw_text)
+      self.message_box.text = ""
+      self.message_changed()
+      self._refresh()
+    except Exception:
+      self.activity_nodes['message_error'].textContent = "Your message was not sent. Please check the connection and try again."
+      self.activity_nodes['message_error'].hidden = False
+    finally:
+      self._sending = False
+      self.send_button.enabled = not self.time_up
 
   @handle("new_dialogue_button", "click")
   def new_dialogue_button_click(self, **event_args):

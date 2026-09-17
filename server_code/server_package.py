@@ -13,6 +13,7 @@ import datetime
 
 SESSION_MINUTES = 10
 EXTENSION_MINUTES = 2
+MAX_MESSAGE_LENGTH = 1000
 
 # Light friction, not real auth — change this before class. Keeps students from
 # wandering into the instructor dashboard by accident, nothing more than that.
@@ -34,6 +35,11 @@ def create_room(wizard_name):
   if not wizard_name or not wizard_name.strip():
     raise anvil.server.PermissionDenied("Please enter your name first.")
 
+  personas = list(app_tables.user_personas.search())
+  if not personas:
+    raise ValueError("Customer roles are not ready yet. Please ask your instructor.")
+  persona = random.choice(personas)
+
   code = _make_room_code()
   # Ensure the code isn't already in use by a live room
   while app_tables.rooms.get(room_code=code, status=q.any_of("waiting", "active")):
@@ -42,6 +48,7 @@ def create_room(wizard_name):
   app_tables.rooms.add_row(
     room_code=code,
     wizard_name=wizard_name.strip(),
+    human_persona={"title": persona["title"], "prompt": persona["prompt"]},
     human_name=None,
     status="waiting",
     dialogue_count=1,
@@ -72,10 +79,11 @@ def join_room(room_code, human_name):
   room.update(
     human_name=human_name.strip(),
     status="active",
-    session_start=now,
-    session_end_deadline=now + datetime.timedelta(minutes=SESSION_MINUTES),
+    session_start=room["session_start"] or now,
+    session_end_deadline=room["session_end_deadline"] or (now + datetime.timedelta(minutes=SESSION_MINUTES)),
   )
-  return {"ok": True, "room_code": room["room_code"], "wizard_name": room["wizard_name"]}
+  return {"ok": True, "room_code": room["room_code"], "wizard_name": room["wizard_name"],
+          "human_persona": room["human_persona"]}
 
 
 @anvil.server.callable
@@ -114,7 +122,13 @@ def send_turn(room_code, speaker, message_text):
   room = app_tables.rooms.get(room_code=room_code)
   if not room or room["status"] != "active":
     raise anvil.server.PermissionDenied("This session isn't active.")
-  if not message_text or not message_text.strip():
+  if speaker not in ("human", "wizard"):
+    raise ValueError("Unknown speaker.")
+  if not isinstance(message_text, str):
+    raise ValueError("Please enter a text message.")
+  if len(message_text) > MAX_MESSAGE_LENGTH:
+    raise ValueError("Please keep each message to 1,000 characters or fewer.")
+  if not message_text.strip():
     return
 
   existing = app_tables.turns.search(

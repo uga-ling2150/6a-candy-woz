@@ -83,6 +83,10 @@ db_schema:
       client_hidden: false
       name: created_on
       type: datetime
+    - admin_ui: {order: 8, width: 200}
+      client_hidden: false
+      name: human_persona
+      type: simpleObject
     indexes: []
     server: full
     title: rooms
@@ -143,6 +147,24 @@ db_schema:
     indexes: []
     server: full
     title: turns
+  user_personas:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: persona_code
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: title
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: prompt
+      type: string
+    indexes: []
+    server: full
+    title: user_personas
 name: Wizard of Oz and dialogue annotation
 native_deps: {head_html: <link rel="stylesheet" href="_/theme/style.css">}
 package_name: Wizard_of_Oz_and_dialogue_annotation
