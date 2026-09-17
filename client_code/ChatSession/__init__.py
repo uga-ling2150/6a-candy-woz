@@ -17,6 +17,9 @@ import anvil.js
 class ChatSession(ChatSessionTemplate):
   def __init__(self, room_code, role, student_name, human_persona=None, **properties):
     self.init_components(**properties)
+    dialogue_heading = anvil.js.get_dom_node(self.dialogue_label)
+    dialogue_heading.setAttribute("role", "heading")
+    dialogue_heading.setAttribute("aria-level", "2")
     root = anvil.js.get_dom_node(self)
     self.activity_nodes = {name: root.querySelector("#woz-" + name.replace("_", "-")) for name in ["persona_title", "persona_text", "persona_panel", "message_count", "message_error"]}
     self.room_code = room_code
