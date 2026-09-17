@@ -79,7 +79,7 @@ class ChatSession(ChatSessionTemplate):
       return
     self._refreshing = True
     try:
-      status = anvil.server.call('get_room_status', self.room_code)
+      status = anvil.server.call_s('get_room_status', self.room_code)
       if self.current_dialogue != status['dialogue_count']:
         self.current_dialogue = status['dialogue_count']
         self.last_turn_index = 0
@@ -104,7 +104,7 @@ class ChatSession(ChatSessionTemplate):
         if seconds_left <= 0 and not self.time_up:
           self._handle_time_up()
 
-      result = anvil.server.call('get_turns', self.room_code, self.last_turn_index)
+      result = anvil.server.call_s('get_turns', self.room_code, self.last_turn_index)
       if result['turns']:
         self.transcript_repeater.items = (self.transcript_repeater.items or []) + result['turns']
         self.last_turn_index = result['turns'][-1]['turn_index']

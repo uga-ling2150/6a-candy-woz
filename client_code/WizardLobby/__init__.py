@@ -21,7 +21,7 @@ class WizardLobby(WizardLobbyTemplate):
 
   @handle("poll_timer", "tick")
   def poll_timer_tick(self, **event_args):
-    status = anvil.server.call('get_room_status', self.room_code)
+    status = anvil.server.call_s('get_room_status', self.room_code)
     if status['status'] == 'active':
       self.poll_timer.interval = 0  # stop polling
       open_form(
