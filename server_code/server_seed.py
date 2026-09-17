@@ -131,7 +131,7 @@ CATALOGUE_ITEMS = [
     "in_stock": True,
   },
   {
-    "item_name": "Damn Good Dawg Chews",
+    "item_name": "Darn Good Dawg Chews",
     "category": "Gummy & Chewy",
     "price": "$2.50",
     "flavor_notes": "Caramel chews, seasonal — check stock",
@@ -242,7 +242,7 @@ USER_PERSONAS = [
   {
     "persona_code": "seasonal_favorite",
     "title": "Finding a seasonal favorite",
-    "prompt": "You remember enjoying Damn Good Dawg Chews on an earlier visit. You hope to buy them again today. If they are unavailable, decide whether another candy would work."
+    "prompt": "You remember enjoying Darn Good Dawg Chews on an earlier visit. You hope to buy them again today. If they are unavailable, decide whether another candy would work."
   },
   {
     "persona_code": "game_day",

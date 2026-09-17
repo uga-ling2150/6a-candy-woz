@@ -29,16 +29,43 @@ def _make_room_code():
   return "CANDY-{:04d}".format(random.randint(1000, 9999))
 
 
+def _persona_history(human_persona):
+  """human_persona carries the persona codes already shown to this human in
+  the current room (one per dialogue so far), oldest first."""
+  if not human_persona:
+    return []
+  return human_persona.get("history") or [human_persona["persona_code"]]
+
+
+def _assign_persona(human_name, prior_history):
+  """Give this human a customer role they haven't had yet — not in an
+  earlier dialogue of this room (prior_history) and not in an earlier room.
+  Once every persona has already been used by this name, return None so
+  they get a free-form session instead of a repeat."""
+  personas = list(app_tables.user_personas.search())
+  used_codes = set(prior_history)
+  for row in app_tables.rooms.search(human_name=human_name):
+    used_codes.update(_persona_history(row["human_persona"]))
+  unused = [p for p in personas if p["persona_code"] not in used_codes]
+  if not unused:
+    return None
+  chosen = random.choice(unused)
+  return {
+    "persona_code": chosen["persona_code"],
+    "title": chosen["title"],
+    "prompt": chosen["prompt"],
+    "history": prior_history + [chosen["persona_code"]],
+  }
+
+
 @anvil.server.callable
 def create_room(wizard_name):
   """Wizard calls this to open a new room. Returns the room code."""
   if not wizard_name or not wizard_name.strip():
     raise anvil.server.PermissionDenied("Please enter your name first.")
 
-  personas = list(app_tables.user_personas.search())
-  if not personas:
+  if not list(app_tables.user_personas.search()):
     raise ValueError("Customer roles are not ready yet. Please ask your instructor.")
-  persona = random.choice(personas)
 
   code = _make_room_code()
   # Ensure the code isn't already in use by a live room
@@ -48,7 +75,7 @@ def create_room(wizard_name):
   app_tables.rooms.add_row(
     room_code=code,
     wizard_name=wizard_name.strip(),
-    human_persona={"title": persona["title"], "prompt": persona["prompt"]},
+    human_persona=None,
     human_name=None,
     status="waiting",
     dialogue_count=1,
@@ -75,9 +102,13 @@ def join_room(room_code, human_name):
   if room["status"] == "active" and room["human_name"] and room["human_name"] != human_name.strip():
     return {"ok": False, "message": "That room already has a partner."}
 
+  human_name = human_name.strip()
+  if room["human_persona"] is None:
+    room.update(human_persona=_assign_persona(human_name, []))
+
   now = datetime.datetime.now(anvil.tz.UTC)
   room.update(
-    human_name=human_name.strip(),
+    human_name=human_name,
     status="active",
     session_start=room["session_start"] or now,
     session_end_deadline=room["session_end_deadline"] or (now + datetime.timedelta(minutes=SESSION_MINUTES)),
@@ -174,12 +205,15 @@ def get_turns(room_code, since_index=0):
 
 @anvil.server.callable
 def start_new_dialogue(room_code):
-  """Either student can end the current dialogue and start a fresh one."""
+  """Either student can end the current dialogue and start a fresh one. The
+  human gets a new customer role for the new dialogue, distinct from every
+  role they've already had in this room or an earlier one."""
   room = app_tables.rooms.get(room_code=room_code)
   if not room or room["status"] != "active":
     raise anvil.server.PermissionDenied("This session isn't active.")
-  room.update(dialogue_count=room["dialogue_count"] + 1)
-  return room["dialogue_count"]
+  new_persona = _assign_persona(room["human_name"], _persona_history(room["human_persona"]))
+  room.update(dialogue_count=room["dialogue_count"] + 1, human_persona=new_persona)
+  return {"dialogue_count": room["dialogue_count"], "human_persona": new_persona}
 
 
 @anvil.server.callable

@@ -31,10 +31,8 @@ class ChatSession(ChatSessionTemplate):
     self._sending = False
     self.current_dialogue = None
 
-    if role == "human" and human_persona:
-      self.activity_nodes["persona_title"].textContent = human_persona.get("title", "Your customer role")
-      self.activity_nodes["persona_text"].textContent = human_persona.get("prompt", "")
-      self.activity_nodes["persona_panel"].hidden = False
+    if role == "human":
+      self._update_persona_display(human_persona)
 
     self.catalogue_panel.visible = (role == 'wizard')
     if role == 'wizard':
@@ -53,6 +51,14 @@ class ChatSession(ChatSessionTemplate):
 
     self.poll_timer.interval = 2
     self._refresh()  # initial paint so students aren't staring at a blank screen
+
+  def _update_persona_display(self, human_persona):
+    if human_persona:
+      self.activity_nodes["persona_title"].textContent = human_persona.get("title", "Your customer role")
+      self.activity_nodes["persona_text"].textContent = human_persona.get("prompt", "")
+      self.activity_nodes["persona_panel"].hidden = False
+    else:
+      self.activity_nodes["persona_panel"].hidden = True
 
   def _format_seconds(self, seconds):
     seconds = max(0, int(seconds))
@@ -141,9 +147,11 @@ class ChatSession(ChatSessionTemplate):
 
   @handle("new_dialogue_button", "click")
   def new_dialogue_button_click(self, **event_args):
-    anvil.server.call('start_new_dialogue', self.room_code)
+    result = anvil.server.call('start_new_dialogue', self.room_code)
     self.last_turn_index = 0
     self.transcript_repeater.items = []
+    if self.role == "human":
+      self._update_persona_display(result["human_persona"])
     self._refresh()
 
   @handle("extend_button", "click")
