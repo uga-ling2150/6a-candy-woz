@@ -9,11 +9,18 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import anvil.js
 
 
 class HumanLobby(HumanLobbyTemplate):
   def __init__(self, student_name, **properties):
     self.init_components(**properties)
+    node = anvil.js.get_dom_node(self.code_box)
+    if node.tagName.lower() != "input":
+      node = node.querySelector("input")
+    node.setAttribute("id", "woz-room-code-input")
+    node.setAttribute("aria-label", "Room code")
+    anvil.js.get_dom_node(self.error_label).setAttribute("role", "alert")
     self.student_name = student_name
 
   @handle("join_button", "click")
@@ -34,5 +41,6 @@ class HumanLobby(HumanLobbyTemplate):
       'ChatSession',
       room_code=result['room_code'],
       role='human',
+      human_persona=result.get('human_persona'),
       student_name=self.student_name,
     )

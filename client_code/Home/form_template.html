@@ -1,38 +1,94 @@
-<div class="app-wrapper">
-  <div class="hero">
+<header class="page-header">
+  <h1><a href="https://linguistics.uga.edu/">University of Georgia</a></h1>
+  <h2><a href="https://uga-ling2150.github.io/applets/">Quantitative Linguistics Webapps</a></h2>
+</header>
+
+
+<section aria-labelledby="activity-title" class="lesson-container">
+  <section aria-labelledby="woz-background">
+    <h3 id="activity-title" class="h4 mb-4">Activity 6A: Georgia Candy WoZ</h3>
+    <h4 id="woz-background" class="uga-accent">Background</h4>
+    <p>In a <strong>Wizard of Oz</strong> study, a person performs work that a user might otherwise expect a computer to do. Here, both partners know that a human is playing the system. The conversation helps us investigate the language a future system would need to handle.</p>
+    <p>An <strong>intent label</strong> is a category people assign to an utterance, such as asking a price or making a recommendation. The class will annotate its conversations and train one Naive Bayes classifier together. The categories and examples we choose shape what that classifier can recognize.</p>
+  </section>
+
+
+  <section aria-labelledby="woz-slo">
+  <h4 class="uga-accent">Learning objectives</h4>
+  <ul><li>Experience collecting dialogue through a Wizard of Oz interaction.</li><li>Discuss and justify intent annotations for both customer and worker turns.</li><li>Explain how category choices, context, and training examples affect intent recognition and the user experience.</li></ul>
+  </section>
+
+  <section aria-labelledby="woz-instructions">
+    <h4 id="woz-instructions" class="uga-accent">Instructions</h4>
+    <ol>
+      <li><strong>Pair up.</strong> Choose a Human (customer) and a Wizard (candy store worker). Each person enters a name and selects their role below.</li>
+      <li><strong>Meet in a room.</strong> The Wizard creates a room and shares its code. The Human joins with that code and reads a randomly assigned customer role, visible only to the Human.</li>
+      <li><strong>Talk for about 10 minutes.</strong> The Human uses the role as a starting point and speaks naturally. The Wizard uses the catalogue to respond. Ask questions, explore choices, or change your mind; do not follow a script. Start a new dialogue when one exchange is finished. Use +2 minutes if you need more time.</li>
+      <li><strong>Annotate together on one computer.</strong> When time is up, use the Wizard's computer to label each turn. Choose one best-fitting intent per turn, including worker-side intents. Discuss ambiguous cases and note what a single label leaves out.</li>
+      <li><strong>Reflect as a class.</strong> After saving annotations, return here and discuss the questions below while other pairs finish. Your instructor will train and test one classifier using the class data.</li>
+    </ol>
+    <p>This is a fictional shop: use made-up customer details and do not enter payment information.</p>
+  </section>
+</section>
+
+<main class="app-wrapper woz-home">
+
+
+  <header class="hero woz-hero">
     <div class="hero-text">
       <h2>Georgia Candy <span>WoZ</span></h2>
-      <p>
-        You'll be paired up to roleplay a conversation at a candy store. One of you
-        runs the counter, one of you is the customer. It only takes a few minutes,
-        and there's no wrong way to talk — just talk normally.
-      </p>
+      <p>Step into a candy store. One partner is the customer; the other plays the worker behind the system. Build a conversation together, then explore what happens when you turn it into intent labels.</p>
     </div>
-  </div>
+    <figure class="woz-photo">
+      <img src="_/theme/candy-lollipops.jpg" alt="Colorful lollipops, jelly beans, and sugar-coated candies." width="366" height="549" style="max-height: 200px; object-fit: none;" />
+      <figcaption>Scene illustration. Photo: <a href="https://thenounproject.com/photo/sweet-lollipops-and-candies-5pqKjv/" target="_blank" rel="noopener">ADDICTIVE STOCK / Noun Project</a>, <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank" rel="noopener">CC BY-NC-ND 2.0</a>. Unmodified.</figcaption>
+    </figure>
+  </header>
 
-  <div class="card">
-    <label for="name-field" class="label-sm">Your name</label>
-    <div id="name-field">
-      <anvil-component type="TextBox" name="name_box" prop:placeholder="e.g. Sam"></anvil-component>
-    </div>
-
-    <div style="margin-top:18px;">
-      <label class="label-sm">I am the...</label>
+  <section id="woz-start" aria-labelledby="woz-start-title" class="card">
+    <h2 id="woz-start-title">Join the activity</h2>
+    <label id="woz-name-label" class="label-sm">Your name</label>
+    <anvil-component type="TextBox" name="name_box" prop:placeholder="e.g. Sam"></anvil-component>
+    <fieldset style="border:0;padding:0;margin:18px 0 0;">
+      <legend class="label-sm">I am the...</legend>
       <div class="nlu-row" style="margin-top:8px;">
         <anvil-component type="RadioButton" name="role_wizard" prop:text="Wizard (candy store worker)" prop:group_name="role"></anvil-component>
         <anvil-component type="RadioButton" name="role_human" prop:text="Human (customer)" prop:group_name="role"></anvil-component>
         <anvil-component type="RadioButton" name="role_instructor" prop:text="Instructor" prop:group_name="role"></anvil-component>
       </div>
-    </div>
-
+    </fieldset>
     <div style="margin-top:12px;">
       <anvil-component type="TextBox" name="instructor_code_box" prop:placeholder="Instructor passcode" prop:visible="false"></anvil-component>
     </div>
-
     <anvil-component type="Label" name="error_label" prop:foreground="var(--uga-red)" prop:visible="false"></anvil-component>
+    <div style="margin-top:20px;"><anvil-component type="Button" name="continue_button" prop:text="Continue" prop:role="btn-uga"></anvil-component></div>
+  </section>
+</main>
 
-    <div style="margin-top:20px;">
-      <anvil-component type="Button" name="continue_button" prop:text="Continue" prop:role="btn-uga"></anvil-component>
-    </div>
-  </div>
-</div>
+<section id="woz-discussion" aria-labelledby="woz-discussion-title" class="reflection-container">
+  <h3 id="woz-discussion-title" class="uga-accent mb-3">Discussion questions</h3>
+  <ol>
+    <li>Which turns were hard to label? Could one turn serve more than one purpose, or fit none of the available categories?</li>
+    <li>What did you use from the surrounding conversation that a classifier looking at one turn might miss?</li>
+    <li>How did the customer's role and the worker's responses change the conversation? What kinds of examples are missing from our class dataset?</li>
+    <li>How might fixed intent categories encourage people to change the way they speak? Who might find that difficult, and what would make the interaction more accessible?</li>
+    <li>What is lost when a conversation becomes rows labelled Human or Worker? How well did the plan for the interaction capture what actually happened?</li>
+    <li>After the class test, examine a misclassification. Does it suggest a missing example, an unclear category, or a limitation of the approach?</li>
+  </ol>
+</section>
+<style>
+  .woz-home .card { margin-bottom:24px; }
+  .woz-home .woz-hero { display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
+  .woz-home .hero-text { flex:1 1 340px; }
+  .woz-home .woz-photo { flex:0 1 240px; margin:0; }
+  .woz-home .woz-photo img { display:block; width:100%; height:auto; }
+  .woz-home figcaption { margin-top:8px; font-size:12px; line-height:1.5; color:#444; }
+  .woz-home h1 { margin:0 0 12px; font-size:36px; color:#ba0c2f; }
+  .woz-home h2 { margin-top:0; }
+  .woz-home h3 { font-size:20px; }
+  .woz-home li { margin-bottom:10px; }
+  .woz-home a { text-decoration:underline; }
+  .woz-home a:focus-visible { outline:3px solid #0055a4; outline-offset:3px; }
+  .woz-home [id] { scroll-margin-top:20px; }
+  @media(max-width:600px){ .woz-home .woz-photo{flex-basis:100%;max-width:240px;} }
+</style>

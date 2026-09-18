@@ -65,6 +65,8 @@ h3 {
 
 
 .page-header {
+  display: block;
+  background: none;
   margin: 0 auto 1.5rem;
   max-width: 1200px;
   padding: 0 1rem;
@@ -84,6 +86,12 @@ h3 {
   color: #6c757d;
   font-size: .875rem;
   margin: .3rem 0 0;
+}
+
+/* Bootstrap's .card component forces display:flex/flex-direction:column;
+this project's .card is a plain content box, so reassert block flow. */
+.card {
+  display: block;
 }
 
 .reflection-container h3{
@@ -322,7 +330,7 @@ h3 {
   min-height: 20px;
   font-family: "IBM Plex Mono", monospace;
 }
-.placeholder {
+.hint-text {
   color: var(--muted);
   font-style: italic;
 }
@@ -665,6 +673,14 @@ h3 {
 .spoiler:active, .spoiler.revealed { background: #f8f8f8; color: var(--uga-red); user-select: text; }
 
 .label-sm { font-family: sans-serif; font-weight: bold; font-size: 0.85rem; color: #444; }
+
+/* Bootstrap's Reboot floats legend{float:left;width:100%}; since .nlu-row
+below it is a flex box (its own block formatting context), it gets squeezed
+beside that full-width float instead of sitting under it. */
+legend {
+  float: none;
+  width: auto;
+}
 .char-count { font-family: sans-serif; font-size: 0.75rem; text-align: right; margin-top: -10px; font-weight: bold; }
 
 .custom-btn-primary {
@@ -797,3 +813,24 @@ a:focus-visible { outline: 3px solid #f9a825; outline-offset: 3px; }
 .source-note { border-top: 1px solid #d6d2c4; color: #554f47; font-size: .82rem; line-height: 1.55; margin-top: 1.5rem; padding-top: 1rem; }
 .source-note p { margin: 0; }
 .source-note strong { color: #222; }
+
+/* September 16 Wizard of Oz activity additions */
+
+.woz-home .card { margin-bottom:24px; }
+.woz-home .woz-hero { display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
+.woz-home .hero-text { flex:1 1 340px; }
+.woz-home .woz-photo { flex:0 1 240px; margin:0; }
+.woz-home .woz-photo img { display:block; width:100%; height:auto; }
+.woz-home figcaption { margin-top:8px; font-size:12px; line-height:1.5; color:#444; }
+.woz-home h1 { margin:0 0 12px; font-size:36px; color:#ba0c2f; }
+.woz-home h2 { margin-top:0; }
+.woz-home h3 { font-size:20px; }
+.woz-home li { margin-bottom:10px; }
+.woz-home a { text-decoration:underline; }
+.woz-home a:focus-visible { outline:3px solid #0055a4; outline-offset:3px; }
+.woz-home [id] { scroll-margin-top:20px; }
+@media(max-width:600px){ .woz-home .woz-photo{flex-basis:100%;max-width:240px;} }
+
+.woz-home .hero-text { min-width:0; }
+.woz-home h1 { font-size:36px !important; text-transform:none !important; }
+.woz-home .woz-hero { padding:24px; }

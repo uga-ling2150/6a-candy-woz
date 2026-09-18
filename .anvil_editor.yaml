@@ -1,6 +1,9 @@
 unique_ids:
   assets:
+    candy-jars.jpg: '1789615570819878802471.0446596'
+    candy-lollipops.jpg: '1789616024955400791124564.4388'
     custom.css: '178950255885461008135977.31303'
+    noun_candies_4307836.svg: '1789614893286711883416573.6577'
     style.css: '1789551977345260317697500.49905'
     theme.css: C26SOLFAIAAUZWN6SGCUPGHZFNR23VMG
   forms:
@@ -21,6 +24,7 @@ unique_ids:
     Layouts: X5N7ZWWFM3PEN2AHUWLGW7P7MSQ6XM7U
   scripts:
     Script: '1789551970965856020624594.1876'
+    meeting_setup: '178961561131965114995980.21442'
   server_modules:
     server_annotation: '1789479459997160960112956.63138'
     server_classifier: '1789502508031170379133136.3126'
