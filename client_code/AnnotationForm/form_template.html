@@ -18,7 +18,19 @@
     <anvil-component type="RepeatingPanel" name="turns_repeater" prop:item_template="Wizard_of_Oz_and_dialogue_annotation.AnnotationRowTemplate"></anvil-component>
   </div>
 
+  <section id="woz-discussion" aria-labelledby="woz-discussion-title" class="reflection-container" style="margin-top:24px;">
+    <h3 id="woz-discussion-title" class="uga-accent mb-3">Discussion questions</h3>
+    <ol>
+      <li>Which turns were hard to label? Could one turn serve more than one purpose, or fit none of the available categories?</li>
+      <li>What did you use from the surrounding conversation that a classifier looking at one turn might miss?</li>
+      <li>How did the customer's role and the worker's responses change the conversation? What kinds of examples are missing from our class dataset?</li>
+      <li>How might fixed intent categories encourage people to change the way they speak? Who might find that difficult, and what would make the interaction more accessible?</li>
+      <li>What is lost when a conversation becomes rows labelled Human or Worker, and then get further distilled into a predictive model?</li>
+      <li>After the class test, examine a misclassification. Does it suggest gaps in training data, an unclear category, or a limitation of the approach?</li>
+    </ol>
+  </section>
+
   <div style="margin-top:20px; text-align:right;">
-    <anvil-component type="Button" name="done_button" prop:text="Done annotating" prop:role="btn-uga"></anvil-component>
+    <anvil-component type="Button" name="done_button" prop:text="Finish discussion" prop:role="btn-uga"></anvil-component>
   </div>
 </main>

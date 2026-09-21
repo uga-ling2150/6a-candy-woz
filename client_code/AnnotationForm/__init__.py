@@ -43,4 +43,3 @@ class AnnotationForm(AnnotationFormTemplate):
   @handle("done_button", "click")
   def done_button_click(self, **event_args):
     Notification("Thanks! Your annotations are saved.").show()
-    open_form('Home')
