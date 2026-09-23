@@ -1,6 +1,6 @@
 """
 Server Module: server_rooms
-Handles room creation/joining, the 10-minute session clock, sending/polling
+Handles room creation/joining, the 7-minute session clock, sending/polling
 chat turns, and switching between dialogues within one session.
 """
 import anvil.tables as tables
@@ -11,7 +11,7 @@ import anvil.tz
 import random
 import datetime
 
-SESSION_MINUTES = 10
+SESSION_MINUTES = 7
 EXTENSION_MINUTES = 2
 MAX_MESSAGE_LENGTH = 1000
 
