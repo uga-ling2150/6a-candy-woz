@@ -19,7 +19,8 @@ class Home(HomeTemplate):
     document = anvil.js.window.document
     banner = document.querySelector("#anvil-header")
     if banner:
-      banner.setAttribute("role", "banner")
+      banner.setAttribute("role", "region")
+      banner.setAttribute("aria-label", "Anvil platform information")
     for selector in ["#anvil-header img", "#anvil-badge img"]:
       image = document.querySelector(selector)
       if image:
